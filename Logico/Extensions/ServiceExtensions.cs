@@ -22,5 +22,10 @@ namespace Logico.Extensions
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
+
+        public static void ConfigureSPA(this IServiceCollection services)
+        {
+            services.AddSpaStaticFiles(options => options.RootPath = "clientapp/dist");
+        }
     }
 }

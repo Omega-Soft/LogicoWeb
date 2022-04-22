@@ -1,9 +1,16 @@
+using Logico;
 using Logico.Extensions;
 using NLog;
+using VueCliMiddleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// Add Vue files
+builder.Services.AddSpaStaticFiles(options =>
+{
+    options.RootPath = "clientapp/dist";
+});
 
 // Logger Service
 builder.Services.ConfigureLoggerService();
@@ -26,6 +33,17 @@ LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nl
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.  
+    app.UseHsts();
+}
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -38,5 +56,16 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Add Vue files
+app.UseSpaStaticFiles();
+app.UseSpa(spa => {
+    if (app.Environment.IsDevelopment())
+        spa.Options.SourcePath = "clientapp/";
+    //else
+    //    spa.Options.SourcePath = "dist";
+    if (app.Environment.IsDevelopment())
+        spa.UseVueCli(npmScript: "serve");
+});
 
 app.Run();

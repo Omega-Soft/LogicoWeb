@@ -5,19 +5,60 @@ export default [
     icon: "home"
   },
   {
-    text: "Gestion Ticket",
+    text: "Paramétrage",
+    icon: "preferences",
+    items: [
+      {
+        text: "Article",
+        path: "/Article"
+      },
+      {
+        text: "Moule",
+        path: "/Moule"
+      },
+      {
+        text: "Qualité",
+        path: "/Qualité"
+      },
+      {
+        text: "Fournisseur",
+        path: "/Fournisseur"
+      },
+      {
+        text: "Bateau",
+        path: "/Bateau"
+      },
+      {
+        text: "Origine",
+        path: "/Origine"
+      },
+      {
+        text: "Provenance",
+        path: "/Provenance"
+      },
+      {
+        text: "Camion",
+        path: "/Camion"
+      },
+      {
+        text: "Transporteur",
+        path: "/Transporteur"
+      }
+    ]
+  },
+  {
+    text: "Gestion Test",
     icon: "folder",
     items: [
       
       {
-        text: "Tickets",
+        text: "Test",
         path: "/tickets"
       },
       {
-        text: "TicketStore",
+        text: "TestStore",
         path: "/ticketStore"
-      },
-   
+      }
     ]
   }
 ];

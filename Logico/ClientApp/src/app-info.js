@@ -1,3 +1,3 @@
 export default {
-  title: "Gestion Tickets"
+  title: "Logico"
 };

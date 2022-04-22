@@ -1,7 +1,7 @@
 <template>
   <div class="content-block">
     <footer class="footer">
-      Copyright © 1999-{{new Date().getFullYear()}} {{this.$appInfo.title}} | Powered by OMEGA SOFT Inc.
+      Copyright © 2011-{{new Date().getFullYear()}} {{this.$appInfo.title}} Inc.
       <br />All trademarks or registered trademarks are property of their
       respective owners.
     </footer>
