@@ -16,6 +16,10 @@ namespace Entities.Models
         {
         }
 
+        public virtual DbSet<WebGroupUser> WebGroupUsers { get; set; } = null!;
+        public virtual DbSet<WebPage> WebPages { get; set; } = null!;
+        public virtual DbSet<WebRole> WebRoles { get; set; } = null!;
+        public virtual DbSet<WebUser> WebUsers { get; set; } = null!;
         public virtual DbSet<_0300Bateau> _0300Bateaus { get; set; } = null!;
         public virtual DbSet<_0300Origine> _0300Origines { get; set; } = null!;
         public virtual DbSet<_0300Provenance> _0300Provenances { get; set; } = null!;
@@ -38,6 +42,112 @@ namespace Entities.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<WebGroupUser>(entity =>
+            {
+                entity.HasKey(e => e.IdGroup);
+
+                entity.ToTable("Web_GroupUsers");
+
+                entity.HasIndex(e => e.CodeGroup, "IX_Web_GroupUsers")
+                    .IsUnique();
+
+                entity.Property(e => e.IdGroup).HasColumnName("idGroup");
+
+                entity.Property(e => e.CodeGroup)
+                    .HasMaxLength(50)
+                    .HasColumnName("codeGroup");
+
+                entity.Property(e => e.Designation)
+                    .HasMaxLength(50)
+                    .HasColumnName("designation");
+            });
+
+            modelBuilder.Entity<WebPage>(entity =>
+            {
+                entity.HasKey(e => e.IdPage);
+
+                entity.ToTable("Web_Page");
+
+                entity.HasIndex(e => e.CodePage, "IX_Web_Page")
+                    .IsUnique();
+
+                entity.Property(e => e.IdPage).HasColumnName("idPage");
+
+                entity.Property(e => e.CodePage)
+                    .HasMaxLength(50)
+                    .HasColumnName("codePage");
+
+                entity.Property(e => e.Designation)
+                    .HasMaxLength(50)
+                    .HasColumnName("designation");
+            });
+
+            modelBuilder.Entity<WebRole>(entity =>
+            {
+                entity.HasKey(e => e.IdRole);
+
+                entity.ToTable("Web_Role");
+
+                entity.Property(e => e.IdRole).HasColumnName("idRole");
+
+                entity.Property(e => e.Add).HasColumnName("add");
+
+                entity.Property(e => e.Delete).HasColumnName("delete");
+
+                entity.Property(e => e.IdGroup).HasColumnName("idGroup");
+
+                entity.Property(e => e.IdPage).HasColumnName("idPage");
+
+                entity.Property(e => e.Read).HasColumnName("read");
+
+                entity.Property(e => e.Update).HasColumnName("update");
+
+                entity.HasOne(d => d.IdGroupNavigation)
+                    .WithMany(p => p.WebRoles)
+                    .HasForeignKey(d => d.IdGroup)
+                    .HasConstraintName("FK_Web_Role_Web_GroupUsers");
+
+                entity.HasOne(d => d.IdPageNavigation)
+                    .WithMany(p => p.WebRoles)
+                    .HasForeignKey(d => d.IdPage)
+                    .HasConstraintName("FK_Web_Role_Web_Page");
+            });
+
+            modelBuilder.Entity<WebUser>(entity =>
+            {
+                entity.HasKey(e => e.IdUser);
+
+                entity.ToTable("Web_User");
+
+                entity.HasIndex(e => e.Username, "IX_Web_User")
+                    .IsUnique();
+
+                entity.Property(e => e.IdUser).HasColumnName("idUser");
+
+                entity.Property(e => e.IdGroup).HasColumnName("idGroup");
+
+                entity.Property(e => e.Nom)
+                    .HasMaxLength(50)
+                    .HasColumnName("nom");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(50)
+                    .HasColumnName("password");
+
+                entity.Property(e => e.Prenom)
+                    .HasMaxLength(50)
+                    .HasColumnName("prenom");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(50)
+                    .HasColumnName("username");
+
+                entity.HasOne(d => d.IdGroupNavigation)
+                    .WithMany(p => p.WebUsers)
+                    .HasForeignKey(d => d.IdGroup)
+                    .HasConstraintName("FK_Web_User_Web_GroupUsers");
+            });
+
             modelBuilder.Entity<_0300Bateau>(entity =>
             {
                 entity.HasKey(e => e.IdBateau);

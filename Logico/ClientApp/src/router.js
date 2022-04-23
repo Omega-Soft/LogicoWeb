@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import routes from "./routes"
 import {store} from "./store"
 
@@ -7,7 +7,7 @@ import {store} from "./store"
 
 const router = new createRouter({
   routes,
-  history: createWebHashHistory()
+  history: createWebHistory()
 });
 
 // router.beforeEach((to, from, next) => {

@@ -7,7 +7,20 @@ namespace Repository
     {
         private LogicoWebContext _context;
         private IArticleRepository _article;
+        private IUserRepository _user;
 
+        public IUserRepository User
+        {
+            get
+            {
+                if (_user == null)
+                {
+                    _user = new UserRepository(_context);
+                }
+
+                return _user;
+            }
+        }
         public IArticleRepository Article
         {
             get

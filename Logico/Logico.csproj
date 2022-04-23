@@ -10,7 +10,7 @@
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
 
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <!--<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />-->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
 
     <ItemGroup>
@@ -23,6 +23,7 @@
   </Target>
   
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
@@ -35,6 +36,7 @@
     </PackageReference>
     <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.17.0" />
     <PackageReference Include="VueCliMiddleware" Version="6.0.0" />
   </ItemGroup>
 
