@@ -1,25 +1,25 @@
-import Api from "../api"
-const MAIN_END_POINT = 'Users';
+import Api from "../../api"
+const MAIN_END_POINT = 'Statuts';
 
-const user= {
+const status= {
     namespaced: true,
     state () {
         return {
-            Users: []
+            Status: []
         }
     },
     getters: {
-        getUsers: (state) => state.Users,
+        getStatuts: (state) => state.Statuts,
     },
     mutations:{
-        setUsers: (state, payLoad) => state.Users= payLoad,
+        setStatuts: (state, payLoad) => state.Statuts= payLoad,
     },
     actions:{
-        initUsers: ({commit}) => {
+        initStatuts: ({commit}) => {
             return new Promise((resolve, reject) => {
                 Api.get(MAIN_END_POINT)
                 .then((response) => {
-                    commit("setUsers", response.data);
+                    commit("setStatuts", response.data);
                     resolve(response.data);
                 })
                 .catch((error) => {
@@ -29,4 +29,4 @@ const user= {
         },
     }
 };
-export default user
+export default status

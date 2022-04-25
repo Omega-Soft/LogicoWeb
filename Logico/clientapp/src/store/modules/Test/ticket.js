@@ -1,4 +1,4 @@
-import Api from "../api";
+import Api from "../../api";
 const MAIN_END_POINT = "Tickets/";
 
 const ticket = {

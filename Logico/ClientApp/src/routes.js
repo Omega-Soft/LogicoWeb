@@ -21,7 +21,7 @@ function loadView(view) {
           requiresAuth: true,
           layout: defaultLayout
         },
-        component: loadView("form")
+        component: loadView("Test/form")
       },
       {
         path: "/tickets",
@@ -30,7 +30,7 @@ function loadView(view) {
           requiresAuth: true,
           layout: defaultLayout
         },
-        component: loadView("Ticket")
+        component: loadView("Test/Ticket")
       },
       {
         path: "/ticketStore",
@@ -39,7 +39,7 @@ function loadView(view) {
           requiresAuth: true,
           layout: defaultLayout
         },
-        component: loadView("TicketStore")
+        component: loadView("Test/TicketStore")
       },
       {
         path: "/login",

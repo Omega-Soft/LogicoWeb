@@ -1,9 +1,9 @@
 import { createStore } from 'vuex'
-import ticket from "./modules/ticket"
-import priority from "./modules/priority"
-import status from "./modules/status"
-import user from "./modules/user"
-import login from "./modules/login"
+import ticket from "./modules/Test/ticket"
+import priority from "./modules/Test/priority"
+import status from "./modules/Test/status"
+import user from "./modules/Test/user"
+import login from "./modules/Auth/login"
 
 export const store = createStore({
   modules: {

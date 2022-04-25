@@ -1,4 +1,4 @@
-import Api from "../api";
+import Api from "../../api";
 const END_POINT = 'login/';
 
 const login = {

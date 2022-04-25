@@ -84,12 +84,10 @@ export default {
     }),
     onSubmit: function () {
       //  this.loading = true;
-      console.log("1");
+      console.log(this.formData);
       this.loginAction(this.formData)
         .then(() => {
-          console.log("2");
           this.$router.push("/home");
-          console.log("3");
         })
         .catch(() => {
           this.loading = false;
