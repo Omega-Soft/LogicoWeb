@@ -15,9 +15,9 @@ namespace Repository
             return GetAll()
                 .Select(x => new
                 {
-                    Id = x.IdArticle,
-                    Code = x.CodeArticle,
-                    Article = x.Designation
+                    x.IdArticle,
+                    x.CodeArticle,
+                    x.Designation
                 })
                 .ToList();
         }
