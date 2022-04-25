@@ -7,6 +7,7 @@ namespace Repository
     {
         private LogicoWebContext _context;
         private IArticleRepository _article;
+        private IFournisseurRepository _fournisseur;
         private IUserRepository _user;
 
         public IUserRepository User
@@ -31,6 +32,18 @@ namespace Repository
                 }
 
                 return _article;
+            }
+        }
+        public IFournisseurRepository Fournisseur
+        {
+            get
+            {
+                if (_fournisseur == null)
+                {
+                    _fournisseur = new FournisseurRepository(_context);
+                }
+
+                return _fournisseur;
             }
         }
 
