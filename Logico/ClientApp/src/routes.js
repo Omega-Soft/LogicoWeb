@@ -24,6 +24,15 @@ export default [
     component: loadView("Parametrage/Article"),
   },
   {
+    path: "/parametrage/fournisseur",
+    name: "fournisseur",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Parametrage/Fournisseur"),
+  },
+  {
     name: "form",
     path: "/form/:action/:id",
     meta: {

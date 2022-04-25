@@ -22,7 +22,7 @@ export default [
       },
       {
         text: "Fournisseur",
-        path: "/Fournisseur"
+        path: "/parametrage/Fournisseur"
       },
       {
         text: "Bateau",

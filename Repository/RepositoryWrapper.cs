@@ -8,6 +8,7 @@ namespace Repository
         private LogicoWebContext _context;
         private IArticleRepository _article;
         private IFournisseurRepository _fournisseur;
+        private IMouleRepository _moule;
         private IUserRepository _user;
 
         public IUserRepository User
@@ -46,7 +47,18 @@ namespace Repository
                 return _fournisseur;
             }
         }
+        public IMouleRepository Moule
+        {
+            get
+            {
+                if (_moule == null)
+                {
+                    _moule = new MouleRepository(_context);
+                }
 
+                return _moule;
+            }
+        }
         public RepositoryWrapper(LogicoWebContext context)
         {
             _context = context;
