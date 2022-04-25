@@ -22,7 +22,7 @@ namespace Logico.Controllers
         }
 
         // GET: api/<ArticlesController>
-        [HttpGet("all")]
+        [HttpGet]
         public IActionResult GetAllArticles()
         {
             try
