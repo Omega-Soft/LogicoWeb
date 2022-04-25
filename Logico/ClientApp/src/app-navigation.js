@@ -10,7 +10,7 @@ export default [
     items: [
       {
         text: "Article",
-        path: "/Article"
+        path: "/parametrage/article"
       },
       {
         text: "Moule",
