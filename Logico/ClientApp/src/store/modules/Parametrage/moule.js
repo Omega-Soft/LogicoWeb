@@ -1,26 +1,26 @@
 import Api from "../../api";
-const MAIN_END_POINT = "Fournisseurs/";
+const MAIN_END_POINT = "Moules/";
 
-const Fournisseurs = {
+const Moules = {
   namespaced: true,
   state() {
     return {
-        Fournisseurs: [],
+        Moules: [],
     };
   },
   getters: {
-    getFournisseurs: (state) => state.Fournisseurs,
+    getMoules: (state) => state.Moules,
   },
   mutations: {
-    setFournisseurs: (state, payLoad) => (state.Fournisseurs = payLoad),
+    setMoules: (state, payLoad) => (state.Moules = payLoad),
   },
   actions: {
-    // Initialize Fournisseurs (Get all Fournisseurs)
-    initFournisseurs: ({ commit }) => {
+    // Initialize Moules (Get all Moules)
+    initMoules: ({ commit }) => {
       return new Promise((resolve, reject) => {
         Api.get(MAIN_END_POINT)
           .then((response) => {
-            commit("setFournisseurs", response.data);
+            commit("setMoules", response.data);
             resolve(response.data);
           })
           .catch((error) => {
@@ -29,8 +29,8 @@ const Fournisseurs = {
       });
     },
 
-    // Add Fournisseur
-    addFournisseur: ({ commit },payload) => {
+    // Add Moule
+    addMoule: ({ commit },payload) => {
       console.log(!!commit);
       return new Promise((resolve, reject) => {
         Api.post(MAIN_END_POINT, payload)
@@ -43,10 +43,10 @@ const Fournisseurs = {
       });
     },
 
-    // Update Fournisseur
-    updateFournisseur: ({ commit }, payload) => {
+    // Update Moules
+    updateMoule: ({ commit }, payload) => {
       return new Promise((resolve, reject) => {
-        Api.put(MAIN_END_POINT + payload.idFournisseur, payload)
+        Api.put(MAIN_END_POINT + payload.idMoule, payload)
           .then((response) => {
             resolve(response);
           })
@@ -56,8 +56,8 @@ const Fournisseurs = {
       });
     },
 
-    // Delete Fournisseur
-    deleteFournisseur: ({ commit }, id) => {
+    // Delete Moule
+    deleteMoule: ({ commit }, id) => {
       console.log(!!commit);
       return new Promise((resolve, reject) => {
         Api.delete(MAIN_END_POINT + id)
@@ -71,4 +71,4 @@ const Fournisseurs = {
     },
   },
 };
-export default Fournisseurs;
+export default Moules;

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h2 class="content-block">Fournisseurs</h2>
+    <h2 class="content-block">Moules</h2>
     <DxDataGrid
       :show-borders="true"
-      :data-source="getFournisseurs"
+      :data-source="getMoules"
       :column-auto-width="true"
-      key-expr="idFournisseur"
+      key-expr="idMoule"
       @row-inserting="(e) => Insert(e)"
       @row-updated="(e) => Update(e)"
       @row-removing="(e) => Delete(e)"
@@ -31,60 +31,15 @@
         mode="popup"
       />
      
-      <DxColumn caption="Code Fournisseur" data-field="codeFournisseur">
+      <DxColumn caption="Code Moule" data-field="codeMoule">
         <DxRequiredRule/>
       </DxColumn>
 
-      <DxColumn caption="Raison Sociale" data-field="raisonSociale">
+      <DxColumn caption="Designation" data-field="designation">
         <DxRequiredRule/>
       </DxColumn>
 
-       <DxColumn caption="Email" data-field="email">
-        <DxRequiredRule/>
-          <DxEmailRule/>
-      </DxColumn> 
-
-      <DxColumn caption="Adresse" data-field="adresse">
-      
-      </DxColumn>
-
-       <DxColumn caption="Téléphone" data-field="tel">
-        
-      </DxColumn>
-
-  
-      <DxColumn caption="Date A nouveau" data-field="dateAnouveau"  data-type="date">
-        
-      </DxColumn>
-
-       <DxColumn caption="Fax" data-field="fax">
-       
-      </DxColumn> 
-
-      <DxColumn caption="Site" data-field="site">
-       
-      </DxColumn>
-
-       <DxColumn caption="Code Postal" data-field="codePostal">
-        
-      </DxColumn>
-
-
-      <DxColumn caption="Ville" data-field="ville">
-        <DxRequiredRule/>
-      </DxColumn>
-
-       <DxColumn caption="IsFrsMP" data-field="isFrsMp" >
-      </DxColumn> 
-
-      <DxColumn caption="IsFrsPF" data-field="isFrsPf">
-      </DxColumn>
-
-       <DxColumn caption="IsFrsCharges" data-field="isFrsCharges">
-      </DxColumn>
-
-
-    </DxDataGrid>
+     </DxDataGrid>
   </div>
 </template>
 <script>
@@ -95,7 +50,6 @@ import {
   DxRequiredRule,
   DxLookup,
   DxPager,
-  DxEmailRule,
   DxPaging,
   DxFilterRow,
   DxLoadPanel,
@@ -111,7 +65,6 @@ export default {
     DxRequiredRule,
     DxFilterRow,
     DxLookup,
-    DxEmailRule,
     DxPager,
     DxPaging,
     DxLoadPanel,
@@ -122,21 +75,21 @@ export default {
   },
 
   mounted: async function () {
-    await this.initFournisseurs();
+    await this.initMoules();
   },
 
   computed: {
     ...mapGetters({
-      getFournisseurs: "fournisseur/getFournisseurs",
+      getMoules: "moule/getMoules",
     }),
   },
 
   methods: {
     ...mapActions({
-      initFournisseurs: "fournisseur/initFournisseurs",
-      addFournisseur: "fournisseur/addFournisseur",
-      updateFournisseur: "fournisseur/updateFournisseur",
-      deleteFournisseur: "fournisseur/deleteFournisseur",
+      initMoules: "moule/initMoules",
+      addMoule: "moule/addMoule",
+      updateMoule: "moule/updateMoule",
+      deleteMoule: "moule/deleteMoule",
     }),
      saveGridInstance: function(e) {
             this.dataGridInstance = e.component;
@@ -146,10 +99,10 @@ export default {
         },
 
     async Insert(e) {
-      await this.addFournisseur(e.data)
+      await this.addMoule(e.data)
         .then((response) => {
           console.log(response);
-          notify("Le Fournissseur a été ajouté!", "success", 2000);
+          notify("Le Moule a été ajouté!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -158,10 +111,10 @@ export default {
     },
 
     async Update(e) {
-      await this.updateFournisseur(e.data)
+      await this.updateMoule(e.data)
         .then((response) => {
           console.log(response);
-          notify("Le Fournisseur a bien été modifié!", "success", 2000);
+          notify("Le Moule a bien été modifié!", "success", 2000);
         })
         .catch((error) => {
             console.log(error);
@@ -172,10 +125,10 @@ export default {
     },
 
     async Delete(e) {
-      await this.deleteFournisseur(e.data.idFournisseur)
+      await this.deleteMoule(e.data.idMoule)
         .then((response) => {
           console.log(response);
-          notify("Le Fournisseur a bien été supprimé!", "success", 2000);
+          notify("Le Moule a bien été supprimé!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);

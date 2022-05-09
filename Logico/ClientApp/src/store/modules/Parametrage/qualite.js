@@ -1,26 +1,26 @@
 import Api from "../../api";
-const MAIN_END_POINT = "Fournisseurs/";
+const MAIN_END_POINT = "Qualites/";
 
-const Fournisseurs = {
+const Qualites = {
   namespaced: true,
   state() {
     return {
-        Fournisseurs: [],
+        Qualites: [],
     };
   },
   getters: {
-    getFournisseurs: (state) => state.Fournisseurs,
+    getQualites: (state) => state.Qualites,
   },
   mutations: {
-    setFournisseurs: (state, payLoad) => (state.Fournisseurs = payLoad),
+    setQualites: (state, payLoad) => (state.Qualites = payLoad),
   },
   actions: {
-    // Initialize Fournisseurs (Get all Fournisseurs)
-    initFournisseurs: ({ commit }) => {
+    // Initialize Qualites (Get all Qualites)
+    initQualites: ({ commit }) => {
       return new Promise((resolve, reject) => {
         Api.get(MAIN_END_POINT)
           .then((response) => {
-            commit("setFournisseurs", response.data);
+            commit("setQualites", response.data);
             resolve(response.data);
           })
           .catch((error) => {
@@ -29,8 +29,8 @@ const Fournisseurs = {
       });
     },
 
-    // Add Fournisseur
-    addFournisseur: ({ commit },payload) => {
+    // Add Qualite
+    addQualite: ({ commit },payload) => {
       console.log(!!commit);
       return new Promise((resolve, reject) => {
         Api.post(MAIN_END_POINT, payload)
@@ -43,10 +43,10 @@ const Fournisseurs = {
       });
     },
 
-    // Update Fournisseur
-    updateFournisseur: ({ commit }, payload) => {
+    // Update Qualite
+    updateQualite: ({ commit }, payload) => {
       return new Promise((resolve, reject) => {
-        Api.put(MAIN_END_POINT + payload.idFournisseur, payload)
+        Api.put(MAIN_END_POINT + payload.idQualite, payload)
           .then((response) => {
             resolve(response);
           })
@@ -56,8 +56,8 @@ const Fournisseurs = {
       });
     },
 
-    // Delete Fournisseur
-    deleteFournisseur: ({ commit }, id) => {
+    // Delete Qualite
+    deleteQualite: ({ commit }, id) => {
       console.log(!!commit);
       return new Promise((resolve, reject) => {
         Api.delete(MAIN_END_POINT + id)
@@ -71,4 +71,4 @@ const Fournisseurs = {
     },
   },
 };
-export default Fournisseurs;
+export default Qualites;

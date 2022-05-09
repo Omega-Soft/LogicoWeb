@@ -33,6 +33,66 @@ export default [
     component: loadView("Parametrage/Fournisseur"),
   },
   {
+    path: "/parametrage/moule",
+    name: "moule",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Parametrage/Moule"),
+  },
+  {
+    path: "/parametrage/qualite",
+    name: "qualite",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Parametrage/Qualite"),
+  },
+  {
+    path: "/parametrage/Bateau",
+    name: "bateau",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Parametrage/Bateau"),
+  },
+  {
+    path: "/parametrage/Camion",
+    name: "camion",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Parametrage/Camion"),
+  },{
+    path: "/parametrage/Transporteur",
+    name: "transporteur",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Parametrage/Transporteur"),
+  },{
+    path: "/parametrage/Origine",
+    name: "origine",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Parametrage/Origine"),
+  },{
+    path: "/parametrage/Provenance",
+    name: "provenance",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Parametrage/Provenance"),
+  },
+  {
     name: "form",
     path: "/form/:action/:id",
     meta: {

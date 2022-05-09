@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h2 class="content-block">Fournisseurs</h2>
+    <h2 class="content-block">Transporteurs</h2>
     <DxDataGrid
       :show-borders="true"
-      :data-source="getFournisseurs"
+      :data-source="getTransporteurs"
       :column-auto-width="true"
-      key-expr="idFournisseur"
+      key-expr="idTransporteur"
       @row-inserting="(e) => Insert(e)"
       @row-updated="(e) => Update(e)"
       @row-removing="(e) => Delete(e)"
@@ -31,17 +31,12 @@
         mode="popup"
       />
      
-      <DxColumn caption="Code Fournisseur" data-field="codeFournisseur">
+      <DxColumn caption="Code Transporteurs" data-field="code">
         <DxRequiredRule/>
       </DxColumn>
 
       <DxColumn caption="Raison Sociale" data-field="raisonSociale">
         <DxRequiredRule/>
-      </DxColumn>
-
-       <DxColumn caption="Email" data-field="email">
-        <DxRequiredRule/>
-          <DxEmailRule/>
       </DxColumn> 
 
       <DxColumn caption="Adresse" data-field="adresse">
@@ -53,37 +48,7 @@
       </DxColumn>
 
   
-      <DxColumn caption="Date A nouveau" data-field="dateAnouveau"  data-type="date">
-        
-      </DxColumn>
-
-       <DxColumn caption="Fax" data-field="fax">
-       
-      </DxColumn> 
-
-      <DxColumn caption="Site" data-field="site">
-       
-      </DxColumn>
-
-       <DxColumn caption="Code Postal" data-field="codePostal">
-        
-      </DxColumn>
-
-
-      <DxColumn caption="Ville" data-field="ville">
-        <DxRequiredRule/>
-      </DxColumn>
-
-       <DxColumn caption="IsFrsMP" data-field="isFrsMp" >
-      </DxColumn> 
-
-      <DxColumn caption="IsFrsPF" data-field="isFrsPf">
-      </DxColumn>
-
-       <DxColumn caption="IsFrsCharges" data-field="isFrsCharges">
-      </DxColumn>
-
-
+     
     </DxDataGrid>
   </div>
 </template>
@@ -122,21 +87,21 @@ export default {
   },
 
   mounted: async function () {
-    await this.initFournisseurs();
+    await this.initTransporteurs();
   },
 
   computed: {
     ...mapGetters({
-      getFournisseurs: "fournisseur/getFournisseurs",
+      getTransporteurs: "transporteur/getTransporteurs",
     }),
   },
 
   methods: {
     ...mapActions({
-      initFournisseurs: "fournisseur/initFournisseurs",
-      addFournisseur: "fournisseur/addFournisseur",
-      updateFournisseur: "fournisseur/updateFournisseur",
-      deleteFournisseur: "fournisseur/deleteFournisseur",
+      initTransporteurs: "transporteur/initTransporteurs",
+      addTransporteur: "transporteur/addTransporteur",
+      updateTransporteur: "transporteur/updateTransporteur",
+      deleteTransporteur: "transporteur/deleteTransporteur",
     }),
      saveGridInstance: function(e) {
             this.dataGridInstance = e.component;
@@ -146,10 +111,10 @@ export default {
         },
 
     async Insert(e) {
-      await this.addFournisseur(e.data)
+      await this.addTransporteur(e.data)
         .then((response) => {
           console.log(response);
-          notify("Le Fournissseur a été ajouté!", "success", 2000);
+          notify("Le Transporteur a été ajouté!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -158,10 +123,10 @@ export default {
     },
 
     async Update(e) {
-      await this.updateFournisseur(e.data)
+      await this.updateTransporteur(e.data)
         .then((response) => {
           console.log(response);
-          notify("Le Fournisseur a bien été modifié!", "success", 2000);
+          notify("Le Transporteur a bien été modifié!", "success", 2000);
         })
         .catch((error) => {
             console.log(error);
@@ -172,10 +137,10 @@ export default {
     },
 
     async Delete(e) {
-      await this.deleteFournisseur(e.data.idFournisseur)
+      await this.deleteTransporteur(e.data.idTransporteur)
         .then((response) => {
           console.log(response);
-          notify("Le Fournisseur a bien été supprimé!", "success", 2000);
+          notify("Le Transporteur a bien été supprimé!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);

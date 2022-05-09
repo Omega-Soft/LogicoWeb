@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h2 class="content-block">Fournisseurs</h2>
+    <h2 class="content-block">Origines</h2>
     <DxDataGrid
       :show-borders="true"
-      :data-source="getFournisseurs"
+      :data-source="getOrigines"
       :column-auto-width="true"
-      key-expr="idFournisseur"
+      key-expr="idOrigine"
       @row-inserting="(e) => Insert(e)"
       @row-updated="(e) => Update(e)"
       @row-removing="(e) => Delete(e)"
@@ -16,7 +16,6 @@
        :allow-column-resizing="false"
       column-resizing-mode="widget"
         :repaint-changes-only="true"
-      
       @selection-changed="selectedChanged"
     >
       <DxLoadPanel :enabled="true" />
@@ -31,58 +30,13 @@
         mode="popup"
       />
      
-      <DxColumn caption="Code Fournisseur" data-field="codeFournisseur">
+        <DxColumn caption="Code Origine" data-field="codeOrigine">
         <DxRequiredRule/>
       </DxColumn>
 
-      <DxColumn caption="Raison Sociale" data-field="raisonSociale">
+       <DxColumn caption="Designation" data-field="designation">
         <DxRequiredRule/>
-      </DxColumn>
-
-       <DxColumn caption="Email" data-field="email">
-        <DxRequiredRule/>
-          <DxEmailRule/>
       </DxColumn> 
-
-      <DxColumn caption="Adresse" data-field="adresse">
-      
-      </DxColumn>
-
-       <DxColumn caption="Téléphone" data-field="tel">
-        
-      </DxColumn>
-
-  
-      <DxColumn caption="Date A nouveau" data-field="dateAnouveau"  data-type="date">
-        
-      </DxColumn>
-
-       <DxColumn caption="Fax" data-field="fax">
-       
-      </DxColumn> 
-
-      <DxColumn caption="Site" data-field="site">
-       
-      </DxColumn>
-
-       <DxColumn caption="Code Postal" data-field="codePostal">
-        
-      </DxColumn>
-
-
-      <DxColumn caption="Ville" data-field="ville">
-        <DxRequiredRule/>
-      </DxColumn>
-
-       <DxColumn caption="IsFrsMP" data-field="isFrsMp" >
-      </DxColumn> 
-
-      <DxColumn caption="IsFrsPF" data-field="isFrsPf">
-      </DxColumn>
-
-       <DxColumn caption="IsFrsCharges" data-field="isFrsCharges">
-      </DxColumn>
-
 
     </DxDataGrid>
   </div>
@@ -122,21 +76,21 @@ export default {
   },
 
   mounted: async function () {
-    await this.initFournisseurs();
+    await this.initOrigines();
   },
 
   computed: {
     ...mapGetters({
-      getFournisseurs: "fournisseur/getFournisseurs",
+      getOrigines: "origine/getOrigines",
     }),
   },
 
   methods: {
     ...mapActions({
-      initFournisseurs: "fournisseur/initFournisseurs",
-      addFournisseur: "fournisseur/addFournisseur",
-      updateFournisseur: "fournisseur/updateFournisseur",
-      deleteFournisseur: "fournisseur/deleteFournisseur",
+      initOrigines: "origine/initOrigines",
+      addOrigine: "origine/addOrigine",
+      updateOrigine: "origine/updateOrigine",
+      deleteOrigine: "origine/deleteOrigine",
     }),
      saveGridInstance: function(e) {
             this.dataGridInstance = e.component;
@@ -146,10 +100,12 @@ export default {
         },
 
     async Insert(e) {
-      await this.addFournisseur(e.data)
+      await this.addOrigine(e.data)
         .then((response) => {
           console.log(response);
-          notify("Le Fournissseur a été ajouté!", "success", 2000);
+          console.log(e.data);
+
+          notify("Le Origine a été ajouté!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -158,10 +114,10 @@ export default {
     },
 
     async Update(e) {
-      await this.updateFournisseur(e.data)
+      await this.updateOrigine(e.data)
         .then((response) => {
           console.log(response);
-          notify("Le Fournisseur a bien été modifié!", "success", 2000);
+          notify("Le Origine a bien été modifié!", "success", 2000);
         })
         .catch((error) => {
             console.log(error);
@@ -172,10 +128,10 @@ export default {
     },
 
     async Delete(e) {
-      await this.deleteFournisseur(e.data.idFournisseur)
+      await this.deleteOrigine(e.data.idOrigine)
         .then((response) => {
           console.log(response);
-          notify("Le Fournisseur a bien été supprimé!", "success", 2000);
+          notify("Le Origine a bien été supprimé!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);

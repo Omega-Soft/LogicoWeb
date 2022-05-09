@@ -14,11 +14,11 @@ export default [
       },
       {
         text: "Moule",
-        path: "/Moule"
+        path: "/parametrage/Moule"
       },
       {
         text: "Qualité",
-        path: "/Qualité"
+        path: "/parametrage/qualite"
       },
       {
         text: "Fournisseur",
@@ -26,23 +26,23 @@ export default [
       },
       {
         text: "Bateau",
-        path: "/Bateau"
+        path: "/parametrage/Bateau"
       },
       {
         text: "Origine",
-        path: "/Origine"
+        path: "/parametrage/Origine"
       },
       {
         text: "Provenance",
-        path: "/Provenance"
+        path: "/parametrage/Provenance"
       },
       {
         text: "Camion",
-        path: "/Camion"
+        path: "/parametrage/Camion"
       },
       {
         text: "Transporteur",
-        path: "/Transporteur"
+        path: "/parametrage/Transporteur"
       }
     ]
   },

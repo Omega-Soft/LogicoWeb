@@ -10,6 +10,12 @@ namespace Repository
         private IFournisseurRepository _fournisseur;
         private IMouleRepository _moule;
         private IUserRepository _user;
+        private IQualiteRepository _qualite;
+        private IBateauRepository _bateau;
+        private ITransporteurRepository _transporteur;
+        private ICamionRepository _camion;
+        private IOrigineRepository _origine;
+        private IProvenanceRepository _provenance; 
 
         public IUserRepository User
         {
@@ -59,6 +65,83 @@ namespace Repository
                 return _moule;
             }
         }
+
+        public IQualiteRepository Qualite
+        {
+            get
+            {
+                if (_qualite == null)
+                {
+                    _qualite = new QualiteRepository(_context);
+                }
+
+                return _qualite;
+            }
+        }
+        public IBateauRepository Bateau
+        {
+            get
+            {
+                if (_bateau == null)
+                {
+                    _bateau = new BateauRepository(_context);
+                }
+
+                return _bateau;
+            }
+        }
+        public ICamionRepository Camion
+        {
+            get
+            {
+                if (_camion == null)
+                {
+                    _camion = new CamionRepository(_context);
+                }
+
+                return _camion;
+            }
+        }
+
+        public ITransporteurRepository Transporteur
+        {
+            get
+            {
+                if (_transporteur == null)
+                {
+                    _transporteur = new TransporteurRepository(_context);
+                }
+
+                return _transporteur;
+            }
+        }
+        public IOrigineRepository Origine
+        {
+            get
+            {
+                if (_origine == null)
+                {
+                    _origine = new OriginesRepository(_context);
+                }
+
+                return _origine;
+            }
+        }
+
+        public IProvenanceRepository Provenance
+
+        {
+            get
+            {
+                if (_provenance == null)
+                {
+                    _provenance = new ProvenanceRepository(_context);
+                }
+
+                return _provenance;
+            }
+        }
+
         public RepositoryWrapper(LogicoWebContext context)
         {
             _context = context;

@@ -285,20 +285,50 @@ namespace Entities.Models
                     .IsUnicode(false)
                     .HasColumnName("codeFournisseur");
 
+                entity.Property(e => e.CodePostal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("codePostal");
+
+                entity.Property(e => e.DateAnouveau)
+                    .HasColumnType("date")
+                    .HasColumnName("dateAnouveau");
+
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("email");
+
+                entity.Property(e => e.Fax)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("fax");
+
+                entity.Property(e => e.IsFrsCharges).HasColumnName("isFrsCharges");
+
+                entity.Property(e => e.IsFrsMp).HasColumnName("isFrsMP");
+
+                entity.Property(e => e.IsFrsPf).HasColumnName("isFrsPF");
 
                 entity.Property(e => e.RaisonSociale)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("raisonSociale");
 
+                entity.Property(e => e.Site)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("site");
+
                 entity.Property(e => e.Tel)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("tel");
+
+                entity.Property(e => e.Ville)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ville");
             });
 
             modelBuilder.Entity<_0600Moule>(entity =>

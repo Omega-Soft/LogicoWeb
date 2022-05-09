@@ -12,19 +12,7 @@ namespace Repository
 
         public IEnumerable<Object> GetAllFournisseurs()
         {
-            return GetAll()
-                .Select(x => new
-                {
-                    Id = x.IdFournisseur,
-                    Code = x.CodeFournisseur,
-                    RaisonSociale = x.RaisonSociale,
-                    Adresse = x.Adresse,
-                    Email = x.Email,
-                    Tel = x.Tel
-
-
-                })
-                .ToList();
+            return GetAll().ToList();
         }
             public _0400Fournisseur GetFournisseurById(int Id)
             {
