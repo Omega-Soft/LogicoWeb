@@ -47,6 +47,23 @@ export default [
     ]
   },
   {
+    text: "Réception MP",
+    icon: "columnchooser",
+    items: [
+      {
+        text: "bons réception",
+        icon: "box",
+        path: ""
+        
+      },
+      {
+        text: "transport ",
+        icon: "car",
+        path: ""
+      },
+    ]
+    },
+  {
     text: "Gestion Test",
     icon: "folder",
     items: [

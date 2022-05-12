@@ -13,6 +13,8 @@
     "core-js": "^3.8.3",
     "devextreme": "^21.2.4",
     "devextreme-vue": "^21.2.4",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.23",
     "register-service-worker": "^1.7.2",
     "sass": "^1.34.1",
     "vue": "^3.2.13",

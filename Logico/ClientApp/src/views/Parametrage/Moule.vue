@@ -3,6 +3,7 @@
     <h2 class="content-block">Moules</h2>
     <DxDataGrid
       :show-borders="true"
+      :ref="gridRef"
       :data-source="getMoules"
       :column-auto-width="true"
       key-expr="idMoule"
@@ -30,6 +31,12 @@
         refresh-mode="reshape"
         mode="popup"
       />
+          <DxSpeedDialAction
+        :index="1"
+        :on-click="exportGrid"
+        icon="exportpdf"
+        label=""
+      />
      
       <DxColumn caption="Code Moule" data-field="codeMoule">
         <DxRequiredRule/>
@@ -55,7 +62,13 @@ import {
   DxLoadPanel,
 } from "devextreme-vue/data-grid";
 import notify from "devextreme/ui/notify";
+import DxSpeedDialAction from "devextreme-vue/speed-dial-action";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
+import { exportDataGrid as exportDataGridToPdf } from "devextreme/pdf_exporter";
 import { mapGetters, mapActions } from "vuex";
+const gridRef = "grid";
+
 
 export default {
   components: {
@@ -63,6 +76,7 @@ export default {
     DxColumn,
     DxEditing,
     DxRequiredRule,
+     DxSpeedDialAction,
     DxFilterRow,
     DxLookup,
     DxPager,
@@ -71,7 +85,9 @@ export default {
   },
 
   data() {
-    
+    return{
+      gridRef ,
+    };
   },
 
   mounted: async function () {
@@ -82,6 +98,9 @@ export default {
     ...mapGetters({
       getMoules: "moule/getMoules",
     }),
+    grid() {
+      return this.$refs[gridRef].instance;
+    },
   },
 
   methods: {
@@ -133,6 +152,63 @@ export default {
         .catch((error) => {
           console.log(error);
           notify("Echec de suppression!", "error", 2000);
+        });
+    },
+         exportGrid() {
+           let moules = this.getMoules;
+      if (!moules) {
+        notify("Aucun données a exporter", "error", 2000);
+        return;
+      }
+      const pdfDoc = new jsPDF();
+      exportDataGridToPdf({
+        jsPDFDocument: pdfDoc,
+        component: this.grid,
+        customizeCell: function (options) {
+          const { gridCell, pdfCell } = options;
+          if (gridCell.rowType === "data") {
+            pdfCell.styles = {};
+          }
+        },
+      })
+        .then(() => {
+          pdfDoc.setFontSize(12);
+          const pageCount = pdfDoc.internal.getNumberOfPages();
+          for (let i = 1; i <= pageCount; i++) {
+            pdfDoc.setPage(i);
+            const pageSize = pdfDoc.internal.pageSize;
+            const pageWidth = pageSize.width
+              ? pageSize.width
+              : pageSize.getWidth();
+            const pageHeight = pageSize.height
+              ? pageSize.height
+              : pageSize.getHeight();
+            const header = "Liste des Moules";
+            const footer = `Page ${i} sur ${pageCount}`;
+
+            // Header
+            pdfDoc.setTextColor(20, 143, 119);
+            pdfDoc.setFontSize(18);
+            pdfDoc.text(
+              header,
+              pageWidth / 2 - pdfDoc.getTextWidth(header) / 2,
+              4,
+              { baseline: "top" }
+            );
+
+            // Footer
+            pdfDoc.setTextColor(0, 0, 0);
+            pdfDoc.setFontSize(12);
+            pdfDoc.text(
+              footer,
+              pageWidth / 2 - pdfDoc.getTextWidth(footer) / 2,
+              pageHeight - 7,
+              { baseline: "bottom" }
+            );
+          }
+        })
+        .then(() => {
+          pdfDoc.save("Liste_des_Moules.pdf");
         });
     },
   },
