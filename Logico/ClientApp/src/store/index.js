@@ -13,6 +13,7 @@ import priority from "./modules/Test/priority"
 import status from "./modules/Test/status"
 import user from "./modules/Test/user"
 import login from "./modules/Auth/login"
+import bonReception from "./modules/BonReception/bonReception"
 
 export const store = createStore({
   modules: {
@@ -29,6 +30,7 @@ export const store = createStore({
     priority,
     status,
     user,
-    login
+    login,
+    bonReception
   }
 })

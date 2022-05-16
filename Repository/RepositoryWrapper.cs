@@ -16,6 +16,8 @@ namespace Repository
         private ICamionRepository _camion;
         private IOrigineRepository _origine;
         private IProvenanceRepository _provenance; 
+        private IBonReceptionMpREpository _bonReceptionMp;
+        private ILotMpRepository _lotMp;
 
         public IUserRepository User
         {
@@ -141,6 +143,33 @@ namespace Repository
                 return _provenance;
             }
         }
+        public IBonReceptionMpREpository BonReceptionMp
+
+        {
+            get
+            {
+                if (_bonReceptionMp == null)
+                {
+                    _bonReceptionMp = new BonReceptionMpREpository(_context);
+                }
+
+                return _bonReceptionMp;
+            }
+        }
+        public ILotMpRepository LotMp
+
+        {
+            get
+            {
+                if (_lotMp == null)
+                {
+                    _lotMp = new LotMpRepository(_context);
+                }
+
+                return _lotMp;
+            }
+        }
+
 
         public RepositoryWrapper(LogicoWebContext context)
         {

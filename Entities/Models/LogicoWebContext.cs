@@ -24,6 +24,9 @@ namespace Entities.Models
         public virtual DbSet<_0300Origine> _0300Origines { get; set; } = null!;
         public virtual DbSet<_0300Provenance> _0300Provenances { get; set; } = null!;
         public virtual DbSet<_0300TypeBateau> _0300TypeBateaus { get; set; } = null!;
+        public virtual DbSet<_0301BonReceptionMp> _0301BonReceptionMps { get; set; } = null!;
+        public virtual DbSet<_0301DetailsReceptionMp> _0301DetailsReceptionMps { get; set; } = null!;
+        public virtual DbSet<_0301LotMp> _0301LotMps { get; set; } = null!;
         public virtual DbSet<_0400Article> _0400Articles { get; set; } = null!;
         public virtual DbSet<_0400Fournisseur> _0400Fournisseurs { get; set; } = null!;
         public virtual DbSet<_0600Moule> _0600Moules { get; set; } = null!;
@@ -36,7 +39,7 @@ namespace Entities.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=192.168.100.160;Database=LogicoWeb;User ID=sa;Password=Omega@@123");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-CNCGGML\\SOUKAINA_SERVER;Database=LogicoWeb;Trusted_Connection=True;");
             }
         }
 
@@ -243,6 +246,177 @@ namespace Entities.Models
                     .HasColumnName("designation");
             });
 
+            modelBuilder.Entity<_0301BonReceptionMp>(entity =>
+            {
+                entity.HasKey(e => e.IdBr);
+
+                entity.ToTable("0301_BonReception_MP");
+
+                entity.HasIndex(e => e.CodeBr, "IX_0301_BonReception_MP")
+                    .IsUnique();
+
+                entity.Property(e => e.IdBr).HasColumnName("idBR");
+
+                entity.Property(e => e.Brute).HasColumnName("brute");
+
+                entity.Property(e => e.CodeBr)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("codeBR");
+
+                entity.Property(e => e.CoutAchat).HasColumnName("coutAchat");
+
+                entity.Property(e => e.DateBr)
+                    .HasColumnType("date")
+                    .HasColumnName("dateBR");
+
+                entity.Property(e => e.IdBateau).HasColumnName("idBateau");
+
+                entity.Property(e => e.IdCamion).HasColumnName("idCamion");
+
+                entity.Property(e => e.IdFournisseur).HasColumnName("idFournisseur");
+
+                entity.Property(e => e.IdLot).HasColumnName("idLot");
+
+                entity.Property(e => e.IdOrigine).HasColumnName("idOrigine");
+
+                entity.Property(e => e.IdProvenance).HasColumnName("idProvenance");
+
+                entity.Property(e => e.IdTransporteur).HasColumnName("idTransporteur");
+
+                entity.Property(e => e.IsNegos).HasColumnName("isNegos");
+
+                entity.Property(e => e.Montant).HasColumnName("montant");
+
+                entity.Property(e => e.NbrCaisse).HasColumnName("nbrCaisse");
+
+                entity.Property(e => e.NbrPalettes).HasColumnName("nbrPalettes");
+
+                entity.Property(e => e.NumBonPese)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("numBonPese");
+
+                entity.Property(e => e.Prevalidee).HasColumnName("prevalidee");
+
+                entity.Property(e => e.PrixAchat).HasColumnName("prixAchat");
+
+                entity.Property(e => e.Tare).HasColumnName("tare");
+
+                entity.Property(e => e.Validee).HasColumnName("validee");
+
+                entity.HasOne(d => d.IdBateauNavigation)
+                    .WithMany(p => p._0301BonReceptionMps)
+                    .HasForeignKey(d => d.IdBateau)
+                    .HasConstraintName("FK_0301_BonReception_MP_0300_Bateau");
+
+                entity.HasOne(d => d.IdCamionNavigation)
+                    .WithMany(p => p._0301BonReceptionMps)
+                    .HasForeignKey(d => d.IdCamion)
+                    .HasConstraintName("FK_0301_BonReception_MP_0700_Camion");
+
+                entity.HasOne(d => d.IdFournisseurNavigation)
+                    .WithMany(p => p._0301BonReceptionMps)
+                    .HasForeignKey(d => d.IdFournisseur)
+                    .HasConstraintName("FK_0301_BonReception_MP_0400_Fournisseur");
+
+                entity.HasOne(d => d.IdLotNavigation)
+                    .WithMany(p => p._0301BonReceptionMps)
+                    .HasForeignKey(d => d.IdLot)
+                    .HasConstraintName("FK_0301_BonReception_MP_0301_Lot_MP");
+
+                entity.HasOne(d => d.IdOrigineNavigation)
+                    .WithMany(p => p._0301BonReceptionMps)
+                    .HasForeignKey(d => d.IdOrigine)
+                    .HasConstraintName("FK_0301_BonReception_MP_0300_Origine");
+
+                entity.HasOne(d => d.IdProvenanceNavigation)
+                    .WithMany(p => p._0301BonReceptionMps)
+                    .HasForeignKey(d => d.IdProvenance)
+                    .HasConstraintName("FK_0301_BonReception_MP_0300_Provenance");
+
+                entity.HasOne(d => d.IdTransporteurNavigation)
+                    .WithMany(p => p._0301BonReceptionMps)
+                    .HasForeignKey(d => d.IdTransporteur)
+                    .HasConstraintName("FK_0301_BonReception_MP_0700_Transporteur");
+            });
+
+            modelBuilder.Entity<_0301DetailsReceptionMp>(entity =>
+            {
+                entity.HasKey(e => e.IdDetailsBr);
+
+                entity.ToTable("0301_DetailsReceptionMP");
+
+                entity.HasIndex(e => e.CodeDetailsBr, "IX_0301_DetailsReceptionMP")
+                    .IsUnique();
+
+                entity.Property(e => e.IdDetailsBr).HasColumnName("idDetailsBR");
+
+                entity.Property(e => e.CodeDetailsBr)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("codeDetailsBR");
+
+                entity.Property(e => e.Eventre).HasColumnName("eventre");
+
+                entity.Property(e => e.Histamine).HasColumnName("histamine");
+
+                entity.Property(e => e.IdArticle).HasColumnName("idArticle");
+
+                entity.Property(e => e.IdBr).HasColumnName("idBR");
+
+                entity.Property(e => e.IdMoule).HasColumnName("idMoule");
+
+                entity.Property(e => e.IdQualite).HasColumnName("idQualite");
+
+                entity.Property(e => e.MontantAchat).HasColumnName("montantAchat");
+
+                entity.Property(e => e.PrixUnitaire).HasColumnName("prixUnitaire");
+
+                entity.Property(e => e.QtePayee).HasColumnName("qtePayee");
+
+                entity.Property(e => e.QteRecue).HasColumnName("qteRecue");
+
+                entity.HasOne(d => d.IdArticleNavigation)
+                    .WithMany(p => p._0301DetailsReceptionMps)
+                    .HasForeignKey(d => d.IdArticle)
+                    .HasConstraintName("FK_0301_DetailsReceptionMP_0400_Article");
+
+                entity.HasOne(d => d.IdBrNavigation)
+                    .WithMany(p => p._0301DetailsReceptionMps)
+                    .HasForeignKey(d => d.IdBr)
+                    .HasConstraintName("FK_0301_DetailsReceptionMP_0301_BonReception_MP");
+
+                entity.HasOne(d => d.IdMouleNavigation)
+                    .WithMany(p => p._0301DetailsReceptionMps)
+                    .HasForeignKey(d => d.IdMoule)
+                    .HasConstraintName("FK_0301_DetailsReceptionMP_0600_Moule");
+
+                entity.HasOne(d => d.IdQualiteNavigation)
+                    .WithMany(p => p._0301DetailsReceptionMps)
+                    .HasForeignKey(d => d.IdQualite)
+                    .HasConstraintName("FK_0301_DetailsReceptionMP_1100_Qualite");
+            });
+
+            modelBuilder.Entity<_0301LotMp>(entity =>
+            {
+                entity.HasKey(e => e.IdLot);
+
+                entity.ToTable("0301_Lot_MP");
+
+                entity.HasIndex(e => e.CodeLot, "IX_0301_Lot_MP")
+                    .IsUnique();
+
+                entity.Property(e => e.IdLot).HasColumnName("idLot");
+
+                entity.Property(e => e.CodeLot)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("codeLot");
+
+                entity.Property(e => e.Journee).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<_0400Article>(entity =>
             {
                 entity.HasKey(e => e.IdArticle);
@@ -285,15 +459,6 @@ namespace Entities.Models
                     .IsUnicode(false)
                     .HasColumnName("codeFournisseur");
 
-                entity.Property(e => e.CodePostal)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("codePostal");
-
-                entity.Property(e => e.DateAnouveau)
-                    .HasColumnType("date")
-                    .HasColumnName("dateAnouveau");
-
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
                     .IsUnicode(false)
@@ -304,31 +469,15 @@ namespace Entities.Models
                     .IsUnicode(false)
                     .HasColumnName("fax");
 
-                entity.Property(e => e.IsFrsCharges).HasColumnName("isFrsCharges");
-
-                entity.Property(e => e.IsFrsMp).HasColumnName("isFrsMP");
-
-                entity.Property(e => e.IsFrsPf).HasColumnName("isFrsPF");
-
                 entity.Property(e => e.RaisonSociale)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("raisonSociale");
 
-                entity.Property(e => e.Site)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("site");
-
                 entity.Property(e => e.Tel)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("tel");
-
-                entity.Property(e => e.Ville)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("ville");
             });
 
             modelBuilder.Entity<_0600Moule>(entity =>

@@ -29,7 +29,50 @@
         :allow-adding="true"
         refresh-mode="reshape"
         mode="popup"
-      />
+       >
+        <!-- <DxPopup
+          :show-title="true"
+          title="Fournisseur Info"
+        />
+          <DxForm>
+          <DxItem
+            :col-count="3"
+            :col-span="2"
+            item-type="group"
+          > -->
+           <DxColumn caption="Code Fournisseur" data-field="codeFournisseur">
+        <DxRequiredRule />
+      </DxColumn>
+
+      <DxColumn caption="Raison Sociale" data-field="raisonSociale">
+        <DxRequiredRule />
+      </DxColumn>
+
+      <DxColumn caption="Email" data-field="email">
+        <DxRequiredRule />
+        <DxEmailRule />
+      </DxColumn>
+
+            <!-- <DxItem
+              :col-span="2"
+              :editor-options="{ height: 100 }"
+              data-field="Notes"
+              editor-type="dxTextArea"
+            />
+          </DxItem> -->
+<!-- 
+          <DxItem
+            :col-count="2"
+            :col-span="2"
+            item-type="group"
+            caption="Home Address"
+          > -->
+             <DxColumn caption="Adresse" data-field="adresse"> </DxColumn>
+
+            <DxColumn caption="Téléphone" data-field="tel"> </DxColumn>
+          <!-- </DxItem>
+        </DxForm>-->
+      </DxEditing> 
       <DxSpeedDialAction
         :index="1"
         :on-click="exportGrid"
@@ -54,7 +97,7 @@
 
       <DxColumn caption="Téléphone" data-field="tel"> </DxColumn>
 
-      <DxColumn
+      <!-- <DxColumn
         caption="Date A nouveau"
         data-field="dateAnouveau"
         data-type="date"
@@ -74,8 +117,8 @@
 
       <DxColumn caption="IsFrsPF" data-field="isFrsPf"> </DxColumn>
 
-      <DxColumn caption="IsFrsCharges" data-field="isFrsCharges"> </DxColumn>
-    </DxDataGrid>
+      <DxColumn caption="IsFrsCharges" data-field="isFrsCharges"> </DxColumn>-->
+    </DxDataGrid> 
   </div>
 </template>
 <script>
@@ -86,11 +129,14 @@ import {
   DxRequiredRule,
   DxLookup,
   DxPager,
+  DxForm,
+  DxPopup,
   DxEmailRule,
   DxPaging,
   DxFilterRow,
   DxLoadPanel,
 } from "devextreme-vue/data-grid";
+import { DxItem } from 'devextreme-vue/form';
 import DxSpeedDialAction from "devextreme-vue/speed-dial-action";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
@@ -103,6 +149,9 @@ export default {
     DxDataGrid,
     DxColumn,
     DxEditing,
+    DxItem,
+    DxForm,
+    DxPopup,
     DxRequiredRule,
     DxSpeedDialAction,
     DxFilterRow,

@@ -28,7 +28,7 @@
         :allow-deleting="true"
         :allow-adding="true"
         refresh-mode="reshape"
-        mode="popup"
+        mode="row"
       />
           <DxSpeedDialAction
         :index="1"

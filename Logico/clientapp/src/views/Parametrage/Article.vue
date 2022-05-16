@@ -31,7 +31,7 @@
         :allow-updating="true"
         :allow-deleting="true"
         :allow-adding="true"
-        mode="popup"
+        mode="row"
       />
 
       <DxSpeedDialAction

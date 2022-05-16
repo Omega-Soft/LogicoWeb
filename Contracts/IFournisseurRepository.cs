@@ -8,5 +8,6 @@ namespace Contracts
 
         public _0400Fournisseur GetFournisseurById(int Id);
     }
+    
    
 }

@@ -67,7 +67,8 @@ export default [
       layout: defaultLayout,
     },
     component: loadView("Parametrage/Camion"),
-  },{
+  },
+  {
     path: "/parametrage/Transporteur",
     name: "transporteur",
     meta: {
@@ -75,7 +76,8 @@ export default [
       layout: defaultLayout,
     },
     component: loadView("Parametrage/Transporteur"),
-  },{
+  },
+  {
     path: "/parametrage/Origine",
     name: "origine",
     meta: {
@@ -83,7 +85,8 @@ export default [
       layout: defaultLayout,
     },
     component: loadView("Parametrage/Origine"),
-  },{
+  },
+  {
     path: "/parametrage/Provenance",
     name: "provenance",
     meta: {
@@ -91,6 +94,15 @@ export default [
       layout: defaultLayout,
     },
     component: loadView("Parametrage/Provenance"),
+  },
+  {
+    path: "/list-bon-receptions",
+    name: "list-bon-receptions",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("BonReception/ListBR"),
   },
   {
     name: "form",

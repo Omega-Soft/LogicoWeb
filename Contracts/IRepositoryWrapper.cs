@@ -12,6 +12,8 @@
         ITransporteurRepository Transporteur { get; }
         IProvenanceRepository Provenance { get; }
         IOrigineRepository Origine { get; }
+        IBonReceptionMpREpository BonReceptionMp { get; }
+        ILotMpRepository LotMp { get; }
 
         void Save();
     }

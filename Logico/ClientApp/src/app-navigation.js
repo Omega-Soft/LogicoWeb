@@ -51,13 +51,13 @@ export default [
     icon: "columnchooser",
     items: [
       {
-        text: "bons réception",
+        text: "Bon Réception",
         icon: "box",
-        path: ""
+        path: "/list-bon-receptions"
         
       },
       {
-        text: "transport ",
+        text: "Transport ",
         icon: "car",
         path: ""
       },
