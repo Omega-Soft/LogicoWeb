@@ -7,7 +7,10 @@ const BonReceptions = {
   state() {
     return {
       BonReceptions: [],
-      CurrentBR: {},
+      CurrentBR: {
+        BR:{},
+        DetailsBR:[]
+      },
       Lots: []
     };
   },
@@ -26,6 +29,20 @@ const BonReceptions = {
     initBonReceptions: ({ commit }) => {
       return new Promise((resolve, reject) => {
         Api.get(MAIN_END_POINT)
+          .then((response) => {
+            commit("setBonReceptions", response.data);
+            resolve(response.data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+
+
+    initBonReceptionLot: ({ commit },idLot) => {
+      return new Promise((resolve, reject) => {
+        Api.get(MAIN_END_POINT + "Lot/" + idLot)
           .then((response) => {
             commit("setBonReceptions", response.data);
             resolve(response.data);

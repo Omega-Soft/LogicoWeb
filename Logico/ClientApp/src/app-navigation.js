@@ -52,14 +52,12 @@ export default [
     items: [
       {
         text: "Bon Réception",
-        icon: "box",
         path: "/list-bon-receptions"
         
       },
       {
         text: "Transport ",
-        icon: "car",
-        path: ""
+        path: "/lot-receptions"
       },
     ]
     },

@@ -1,24 +1,23 @@
 <template>
   <div>
-    <h2 class="content-block">List Bon Receptions</h2>
+    <h2 class="content-block">Les Lots Receptions</h2>
     <DxDataGrid
       class="content-block"
       :focused-row-enabled="true"
       :column-auto-width="true"
       :column-hiding-enabled="true"
       id="grid-container"
+      key-expr="idBr"
       :ref="gridRefName"
       :selection="{ mode: 'single' }"
       :show-borders="false"
-      :data-source="dataSource"
+      :data-source="getBonReceptions"
       :auto-navigate-to-focused-row="true"
       v-model:focused-row-key="selectedRowId"
       v-model:focused-row-index="selectedRowIndex"
       @focused-row-changing="onFocusedRowChanging"
       @focused-row-changed="onFocusedRowChanged"
     >
-      <DxGroupPanel :visible="true" />
-      <DxGrouping :auto-expand-all="autoExpandAll" />
       <DxFilterRow :visible="true" />
       <DxPaging :page-size="10" />
       <DxPager :show-page-size-selector="true" :show-info="true" />
@@ -28,82 +27,79 @@
         <DetailTemplate :BrData="br" />
       </template>
 
-       <DxColumn data-field="idLot"  caption="Code Lot" :group-index="0">
+      <DxToolbar>
+        <DxItem location="before" template="codeLot" />
+        <DxItem location="before" template="dateLot" />
+      </DxToolbar>
+
+      <template #codeLot>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <DxSelectBox
+              width="225"
+              :data-source="getLots"
+              display-expr="codeLot"
+              value-expr="idLot"
+              :value="selectedLot"
+              @value-changed="onSelectLot"
+            />
+          </div>
+        </div>
+      </template>
+
+      <template #dateLot>
+        <div class="dx-field">
+          <div class="dx-field-value">
+            <DxDateBox
+              width="225"
+              :value="lotDate"
+              type="date"
+            />
+          </div>
+        </div>
+      </template>
+      <DxColumn data-field="numBonPese" caption="Bon Pese" />
+
+      <DxColumn data-field="codeBr" caption="N° BR" :width="100" />
+
+      <DxColumn data-field="idFournisseur" caption="Fournisseur">
         <DxLookup
-          :data-source="getLots"
-          display-expr="codeLot"
-          value-expr="idLot"
-        />
-        </DxColumn>
-
-       <DxColumn 
-       data-field="numBonPese"
-       caption="Bon Pese" />
-      
-
-      <DxColumn 
-       data-field="codeBr"
-       caption="N° BR" 
-       :width="100"/>
-
-       <DxColumn 
-       data-field="idFournisseur"
-       caption="Fournisseur" >
-       <DxLookup
           :data-source="getFournisseurs"
           display-expr="raisonSociale"
           value-expr="idFournisseur"
         />
-       </DxColumn>
-       
-       <DxColumn 
-       data-field="idCamion"
-       caption="Camion" >
-       <DxLookup
+      </DxColumn>
+      <DxColumn data-field="idCamion" caption="Camion">
+        <DxLookup
           :data-source="getCamions"
           display-expr="matricule"
           value-expr="idCamion"
         />
-       </DxColumn>
+      </DxColumn>
 
-       <DxColumn 
-       data-field="idOrigine"
-       caption="Origine" >
-       <DxLookup
+      <DxColumn data-field="idOrigine" caption="Origine">
+        <DxLookup
           :data-source="getOrigines"
           display-expr="designation"
           value-expr="idOrigine"
         />
-       </DxColumn>
-         
-       <DxColumn 
-       data-field="montant"
-       caption="Montant" />
+      </DxColumn>
 
-        <DxColumn 
-       data-field="prevalidee"
-       caption="Prévalidée" />
+      <DxColumn data-field="montant" caption="Montant" />
 
-        <DxColumn 
-       data-field="validee"
-       caption="Validée" />
+      <DxColumn data-field="prevalidee" caption="Prévalidée" />
 
-       <DxColumn 
-       data-field="dateBr"
-        data-type="date"
-       caption="Date BR" />
+      <DxColumn data-field="validee" caption="Validée" />
 
-       <DxColumn 
-       data-field="idProvenance"
-       caption="Provenance" >
-       <DxLookup
+      <DxColumn data-field="dateBr" data-type="date" caption="Date BR" />
+
+      <DxColumn data-field="idProvenance" caption="Provenance">
+        <DxLookup
           :data-source="getProvenances"
           display-expr="designation"
           value-expr="idProvenance"
         />
-       </DxColumn>
-
-      <!-- <DxColumn :width="100" data-field="codeLot" :group-index="0" /> -->
+      </DxColumn>
     </DxDataGrid>
     <DxSpeedDialAction
       :index="1"
@@ -143,16 +139,18 @@
 <script>
 import {
   DxDataGrid,
-  DxGrouping,
-  DxGroupPanel,
   DxFilterRow,
   DxPager,
   DxPaging,
+  DxToolbar,
+  DxItem,
   DxEditing,
   DxLookup,
   DxColumn,
   DxMasterDetail,
 } from "devextreme-vue/data-grid";
+import DxDateBox from "devextreme-vue/date-box";
+import { DxSelectBox } from "devextreme-vue/select-box";
 import CustomStore from "devextreme/data/custom_store";
 import DxSpeedDialAction from "devextreme-vue/speed-dial-action";
 import notify from "devextreme/ui/notify";
@@ -168,22 +166,14 @@ export default {
   data() {
     return {
       gridRefName: "grid",
-      dataSource: new CustomStore({
-        key: "idBr",
-        load: async () => {
-          await this.initBonReceptions();
-          return this.getBonReceptions;
-        },
-        remove: () => {
-          //this.onDeleteBR();
-        },
-      }),
+      selectedLot: 1,
       selectedRowId: -1,
       selectedRowIndex: -1,
+      lotDate: null,
     };
   },
-   mounted: async function () {
-    await this.initBonReceptions();
+  mounted: async function () {
+    await this.initBonReceptionLot(-1);
     await this.initLots();
     await this.initCamions();
     await this.initFournisseurs();
@@ -204,9 +194,8 @@ export default {
     },
   },
   methods: {
-
     ...mapActions({
-      initBonReceptions: "bonReception/initBonReceptions",
+      initBonReceptionLot: "bonReception/initBonReceptionLot",
       initLots: "bonReception/initLots",
       initCamions: "camion/initCamions",
       initFournisseurs: "fournisseur/initFournisseurs",
@@ -238,18 +227,42 @@ export default {
       );
       this.grid.Reload();
     },
+    getdate: function () {},
+    onSelectLot: function (e) {
+      console.log(e.value);
+
+      console.log(Array.from(this.getLots).find(
+          (x) => JSON.stringify(x).idLot == this.idLot
+       ));
+
+      console.log(
+        Array.from(this.getLots).find(
+          (x) => JSON.stringify(x).idLot == this.idLot
+        ).journee
+      );
+
+      this.lotDate = Array.from(this.getLots).find(
+        (x) => JSON.stringify(x).idLot == this.idLot
+      ).journee;
+
+      console.log(this.lotDate);
+
+      this.initBonReceptionLot(e.value);
+    },
   },
   components: {
     DxDataGrid,
-    DxGrouping,
-    DxGroupPanel,
     DxFilterRow,
     DxLookup,
     DxPager,
+    DxDateBox,
     DxPaging,
     DxEditing,
     DxColumn,
     DxMasterDetail,
+    DxToolbar,
+    DxItem,
+    DxSelectBox,
     DxSpeedDialAction,
     DetailTemplate,
   },
