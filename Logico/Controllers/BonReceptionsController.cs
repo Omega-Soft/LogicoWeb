@@ -66,6 +66,24 @@ namespace Logico.Controllers
             }
         }
 
+        // GET: api/<BonReceptionsController>
+        [HttpGet("Lot/{idLot}")]
+        public IActionResult GetAllBonReceptionLot(int idLot)
+        {
+            try
+            {
+                var bonReceptions = _repository.BonReceptionMp.GetAllBonReceptionLot(idLot);
+                _logger.LogInfo($"Returned all bonReceptions from database.");
+                return Ok(bonReceptions);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetAllBonReceptions action: {ex.Message}");
+
+                return BadRequest(ex.Message);
+            }
+        }
+
         // GET api/<BonReceptionsController>/5
         [HttpGet("{id}")]
         public IActionResult GetById(int id)

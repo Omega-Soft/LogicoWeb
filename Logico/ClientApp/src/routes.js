@@ -141,6 +141,15 @@ export default [
 
 // Test ------------------------------------------------------------------------------------------------
   {
+    path: "/lot-receptions",
+    name: "lot-receptions",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("BonReception/LotBR"),
+  },
+  {
     name: "form",
     path: "/form/:action/:id",
     meta: {
