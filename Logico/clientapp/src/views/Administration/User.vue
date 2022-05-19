@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h2 class="content-block">Fournisseurs</h2>
+    <h2 class="content-block">Utilisateurs</h2>
     <DxDataGrid
       :show-borders="true"
       :ref="gridRef"
-      :data-source="getFournisseurs"
+      :data-source="getUsers"
       :column-auto-width="true"
-      key-expr="idFournisseur"
+      key-expr="idUser"
       @row-inserting="(e) => Insert(e)"
       @row-updated="(e) => Update(e)"
       @row-removing="(e) => Delete(e)"
@@ -18,6 +18,7 @@
       column-resizing-mode="widget"
       :repaint-changes-only="true"
       @selection-changed="selectedChanged"
+      @editor-prepared="editorLauncher"
     >
       <DxLoadPanel :enabled="true" />
       <DxPaging :page-size="10" />
@@ -30,95 +31,36 @@
         refresh-mode="reshape"
         mode="popup"
       >
-        <!-- <DxPopup
-          :show-title="true"
-          title="Fournisseur Info"
-        />
-          <DxForm>
-          <DxItem
-            :col-count="3"
-            :col-span="2"
-            item-type="group"
-          > -->
-        <DxColumn caption="Code Fournisseur" data-field="codeFournisseur">
-          <DxRequiredRule />
-        </DxColumn>
-
-        <DxColumn caption="Raison Sociale" data-field="raisonSociale">
-          <DxRequiredRule />
-        </DxColumn>
-
-        <DxColumn caption="Email" data-field="email">
-          <DxRequiredRule />
-          <DxEmailRule />
-        </DxColumn>
-
-        <!-- <DxItem
-              :col-span="2"
-              :editor-options="{ height: 100 }"
-              data-field="Notes"
-              editor-type="dxTextArea"
-            />
-          </DxItem> -->
-        <!-- 
-          <DxItem
-            :col-count="2"
-            :col-span="2"
-            item-type="group"
-            caption="Home Address"
-          > -->
-        <DxColumn caption="Adresse" data-field="adresse"> </DxColumn>
-
-        <DxColumn caption="Téléphone" data-field="tel"> </DxColumn>
-        <!-- </DxItem>
-        </DxForm>-->
       </DxEditing>
+
       <DxSpeedDialAction
         :index="1"
-        :visible="(Array.from(getFournisseurs).length > 0)"
+        :visible="Array.from(getUsers).length > 0"
         :on-click="exportGrid"
         icon="exportpdf"
         label=""
       />
-
-      <DxColumn caption="Code Fournisseur" data-field="codeFournisseur">
+      <DxColumn caption="Username" data-field="username">
         <DxRequiredRule />
       </DxColumn>
-
-      <DxColumn caption="Raison Sociale" data-field="raisonSociale">
-        <DxRequiredRule />
-      </DxColumn>
-
-      <DxColumn caption="Email" data-field="email">
-        <DxRequiredRule />
-        <DxEmailRule />
-      </DxColumn>
-
-      <DxColumn caption="Adresse" data-field="adresse"> </DxColumn>
-
-      <DxColumn caption="Téléphone" data-field="tel"> </DxColumn>
-
-      <!-- <DxColumn
-        caption="Date A nouveau"
-        data-field="dateAnouveau"
-        data-type="date"
+      <DxColumn
+        caption="Password"
+        data-field="password"
+        :visible="false"
+        name="password"
       >
+        <DxRequiredRule />
       </DxColumn>
+      <DxColumn caption="Nom" data-field="nom"></DxColumn>
 
-      <DxColumn caption="Fax" data-field="fax"> </DxColumn>
-
-      <DxColumn caption="Site" data-field="site"> </DxColumn>
-
-      <DxColumn caption="Code Postal" data-field="codePostal"> </DxColumn>
-
-      <DxColumn caption="Ville" data-field="ville">
+      <DxColumn caption="Prénom" data-field="prenom"></DxColumn>
+      <DxColumn caption="Groupe" data-field="idGroup">
+        <!-- <DxLookup
+          :data-source="getGroupes"
+          display-expr="designation"
+          value-expr="idGroup"
+        /> -->
       </DxColumn>
-
-      <DxColumn caption="IsFrsMP" data-field="isFrsMp"> </DxColumn>
-
-      <DxColumn caption="IsFrsPF" data-field="isFrsPf"> </DxColumn>
-
-      <DxColumn caption="IsFrsCharges" data-field="isFrsCharges"> </DxColumn>-->
     </DxDataGrid>
   </div>
 </template>
@@ -170,12 +112,11 @@ export default {
   },
 
   mounted: async function () {
-    await this.initFournisseurs();
+    await this.initUsers();
   },
-
   computed: {
     ...mapGetters({
-      getFournisseurs: "fournisseur/getFournisseurs",
+      getUsers: "user/getUsers",
     }),
     grid() {
       return this.$refs[gridRef].instance;
@@ -184,10 +125,10 @@ export default {
 
   methods: {
     ...mapActions({
-      initFournisseurs: "fournisseur/initFournisseurs",
-      addFournisseur: "fournisseur/addFournisseur",
-      updateFournisseur: "fournisseur/updateFournisseur",
-      deleteFournisseur: "fournisseur/deleteFournisseur",
+      initUsers: "user/initUsers",
+      addUser: "user/addUser",
+      updateUser: "user/updateUser",
+      deleteUser: "user/deleteUser",
     }),
     saveGridInstance: function (e) {
       this.dataGridInstance = e.component;
@@ -195,12 +136,20 @@ export default {
     refresh: function () {
       this.dataGridInstance.refresh();
     },
-
+    editorLauncher() {
+      console.log("EditorLauncher................................");
+      var pwd = Array.from(document.getElementsByClassName(
+        "dx-texteditor-input"
+      )).find(x=>x.id.includes("password"));
+      if (pwd != null) {
+        pwd.type = "password";
+      }
+    },
     async Insert(e) {
-      await this.addFournisseur(e.data)
+      await this.addUser(e.data)
         .then((response) => {
           console.log(response);
-          notify("Le Fournissseur a été ajouté!", "success", 2000);
+          notify("L'Utilisateur a été ajouté!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -209,10 +158,10 @@ export default {
     },
 
     async Update(e) {
-      await this.updateFournisseur(e.data)
+      await this.updateUser(e.data)
         .then((response) => {
           console.log(response);
-          notify("Le Fournisseur a bien été modifié!", "success", 2000);
+          notify("L'utilisateur a bien été modifié!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -221,10 +170,10 @@ export default {
     },
 
     async Delete(e) {
-      await this.deleteFournisseur(e.data.idFournisseur)
+      await this.deleteUser(e.data.idUser)
         .then((response) => {
           console.log(response);
-          notify("Le Fournisseur a bien été supprimé!", "success", 2000);
+          notify("L'Utilisateur a bien été supprimé!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -232,8 +181,8 @@ export default {
         });
     },
     exportGrid() {
-      let fournisseur = this.getFournisseurs;
-      if (!fournisseur) {
+      let user = this.getUsers;
+      if (!user) {
         notify("Aucun données a exporter", "error", 2000);
         return;
       }
@@ -260,7 +209,7 @@ export default {
             const pageHeight = pageSize.height
               ? pageSize.height
               : pageSize.getHeight();
-            const header = "Liste des Fournisseurs";
+            const header = "Liste des Utilisateurs";
             const footer = `Page ${i} sur ${pageCount}`;
 
             // Header
@@ -285,7 +234,7 @@ export default {
           }
         })
         .then(() => {
-          pdfDoc.save("Liste_des_Fournisseurs.pdf");
+          pdfDoc.save("Liste_des_Utilisateurs.pdf");
         });
     },
   },

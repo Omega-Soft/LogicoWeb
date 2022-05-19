@@ -197,11 +197,7 @@ export default {
       getCamions: "camion/getCamions",
       getFournisseurs: "fournisseur/getFournisseurs",
       getOrigines: "origine/getOrigines",
-      getProvenances: "provenance/getProvenances",
-
-
-
-
+      getProvenances: "provenance/getProvenances"
     }),
     grid: function () {
       return this.$refs[this.gridRefName].instance;

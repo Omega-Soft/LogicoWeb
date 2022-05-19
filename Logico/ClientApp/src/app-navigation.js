@@ -2,50 +2,74 @@ export default [
   {
     text: "Home",
     path: "/home",
-    icon: "home"
+    icon: "home",
   },
+
+  {
+    text: "Administration",
+    icon: "key",
+    items: [
+      {
+        text: "Utilisateurs",
+        icon: "",
+        path: "/administration/users",
+      },
+      {
+        text: "Groupes Utilisateurs",
+        icon: "",
+        path: "/administration/groupes",
+      },
+      {
+        text: "Droits d'Accéss",
+        icon: "",
+        path: "/administration/droits-access",
+      },
+    ],
+  },
+
   {
     text: "Paramétrage",
     icon: "preferences",
     items: [
       {
         text: "Article",
-        path: "/parametrage/article"
+        path: "/parametrage/article",
       },
       {
         text: "Moule",
-        path: "/parametrage/Moule"
+        path: "/parametrage/Moule",
       },
       {
         text: "Qualité",
-        path: "/parametrage/qualite"
+        path: "/parametrage/qualite",
       },
       {
         text: "Fournisseur",
-        path: "/parametrage/Fournisseur"
+        path: "/parametrage/Fournisseur",
       },
       {
         text: "Bateau",
-        path: "/parametrage/Bateau"
+        path: "/parametrage/Bateau",
       },
       {
         text: "Origine",
-        path: "/parametrage/Origine"
+        path: "/parametrage/Origine",
       },
       {
         text: "Provenance",
-        path: "/parametrage/Provenance"
+        path: "/parametrage/Provenance",
       },
       {
         text: "Camion",
-        path: "/parametrage/Camion"
+        path: "/parametrage/Camion",
       },
       {
         text: "Transporteur",
-        path: "/parametrage/Transporteur"
-      }
-    ]
+        path: "/parametrage/Transporteur",
+      },
+    ],
   },
+
   {
     text: "Réception MP",
     icon: "columnchooser",
@@ -53,29 +77,28 @@ export default [
       {
         text: "Bon Réception",
         icon: "box",
-        path: "/list-bon-receptions"
-        
+        path: "/list-bon-receptions",
       },
       {
         text: "Transport ",
         icon: "car",
-        path: ""
+        path: "",
       },
-    ]
-    },
+    ],
+  },
+  
   {
     text: "Gestion Test",
     icon: "folder",
     items: [
-      
       {
         text: "Test",
-        path: "/tickets"
+        path: "/tickets",
       },
       {
         text: "TestStore",
-        path: "/ticketStore"
-      }
-    ]
-  }
+        path: "/ticketStore",
+      },
+    ],
+  },
 ];

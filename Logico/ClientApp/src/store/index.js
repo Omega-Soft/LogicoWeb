@@ -11,8 +11,8 @@ import provenance from "./modules/Parametrage/provenance"
 import ticket from "./modules/Test/ticket"
 import priority from "./modules/Test/priority"
 import status from "./modules/Test/status"
-import user from "./modules/Test/user"
 import login from "./modules/Auth/login"
+import user from "./modules/Administration/user"
 import bonReception from "./modules/BonReception/bonReception"
 
 export const store = createStore({
@@ -29,8 +29,8 @@ export const store = createStore({
     ticket,
     priority,
     status,
-    user,
     login,
+    user,
     bonReception
   }
 })

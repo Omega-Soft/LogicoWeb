@@ -14,14 +14,13 @@
       :selection="{ mode: 'single' }"
       class="content-block"
       :column-hiding-enabled="true"
-       :allow-column-resizing="false"
+      :allow-column-resizing="false"
       column-resizing-mode="widget"
-        :repaint-changes-only="true"
-      
+      :repaint-changes-only="true"
       @selection-changed="selectedChanged"
     >
       <DxLoadPanel :enabled="true" />
-      <DxPaging :page-size="10"  />
+      <DxPaging :page-size="10" />
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
       <DxEditing
@@ -31,28 +30,25 @@
         refresh-mode="reshape"
         mode="row"
       />
-          <DxSpeedDialAction
+      <DxSpeedDialAction
         :index="1"
+        :visible="(Array.from(getCamions).length > 0)"
         :on-click="exportGrid"
         icon="exportpdf"
         label=""
       />
-     
-    
+
       <DxColumn caption="Matricule" data-field="matricule">
-        <DxRequiredRule/>
+        <DxRequiredRule />
       </DxColumn>
 
-        <DxColumn caption="Transporteur" data-field="idTransporteur">
+      <DxColumn caption="Transporteur" data-field="idTransporteur">
         <DxLookup
           :data-source="getTransporteurs"
           display-expr="raisonSociale"
           value-expr="idTransporteur"
         />
-        </DxColumn>
-
-   
-
+      </DxColumn>
     </DxDataGrid>
   </div>
 </template>
@@ -75,7 +71,7 @@ import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { exportDataGrid as exportDataGridToPdf } from "devextreme/pdf_exporter";
 import { mapGetters, mapActions } from "vuex";
-import Camions from '@/store/modules/Parametrage/camion';
+import Camions from "@/store/modules/Parametrage/camion";
 const gridRef = "grid";
 
 export default {
@@ -85,7 +81,7 @@ export default {
     DxEditing,
     DxRequiredRule,
     DxFilterRow,
-     DxSpeedDialAction,
+    DxSpeedDialAction,
     DxLookup,
     DxEmailRule,
     DxPager,
@@ -94,7 +90,7 @@ export default {
   },
 
   data() {
-     return {
+    return {
       gridRef,
     };
   },
@@ -107,7 +103,7 @@ export default {
   computed: {
     ...mapGetters({
       getCamions: "camion/getCamions",
-      getTransporteurs:"transporteur/getTransporteurs"
+      getTransporteurs: "transporteur/getTransporteurs",
     }),
     grid() {
       return this.$refs[gridRef].instance;
@@ -122,12 +118,12 @@ export default {
       updateCamion: "camion/updateCamion",
       deleteCamion: "camion/deleteCamion",
     }),
-     saveGridInstance: function(e) {
-            this.dataGridInstance = e.component;
-        },
-        refresh: function() {
-            this.dataGridInstance.refresh();
-        },
+    saveGridInstance: function (e) {
+      this.dataGridInstance = e.component;
+    },
+    refresh: function () {
+      this.dataGridInstance.refresh();
+    },
 
     async Insert(e) {
       await this.addCamion(e.data)
@@ -149,11 +145,9 @@ export default {
           notify("Le Camion a bien été modifié!", "success", 2000);
         })
         .catch((error) => {
-            console.log(error);
+          console.log(error);
           notify("Echec de modification!", "error", 2000);
-         
         });
-       
     },
 
     async Delete(e) {
@@ -167,8 +161,8 @@ export default {
           notify("Echec de suppression!", "error", 2000);
         });
     },
-         exportGrid() {
-           let camions = this.getCamions;
+    exportGrid() {
+      let camions = this.getCamions;
       if (!camions) {
         notify("Aucun données a exporter", "error", 2000);
         return;
