@@ -77,12 +77,10 @@ export default [
       {
         text: "Bon Réception",
         path: "/list-bon-receptions"
-        
-        
       },
       {
+        text:"Lot Réception",
         path: "/lot-receptions"
-        path: ""
       },
     ],
   },
