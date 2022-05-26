@@ -198,6 +198,26 @@ export default {
       getFournisseurs: "fournisseur/getFournisseurs",
       getOrigines: "origine/getOrigines",
       getProvenances: "provenance/getProvenances",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }),
     grid: function () {
       return this.$refs[this.gridRefName].instance;

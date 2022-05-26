@@ -30,6 +30,13 @@ builder.Services.AddSpaStaticFiles(options =>
     options.RootPath = "clientapp/dist";
 });
 
+builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+}));
+
 // For Logger Service
 LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
@@ -60,6 +67,9 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+// Enable Cors
+app.UseCors("MyPolicy");
 
 app.UseSpaStaticFiles();
 

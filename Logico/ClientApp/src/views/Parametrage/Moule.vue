@@ -14,14 +14,13 @@
       :selection="{ mode: 'single' }"
       class="content-block"
       :column-hiding-enabled="true"
-       :allow-column-resizing="false"
+      :allow-column-resizing="false"
       column-resizing-mode="widget"
-        :repaint-changes-only="true"
-      
+      :repaint-changes-only="true"
       @selection-changed="selectedChanged"
     >
       <DxLoadPanel :enabled="true" />
-      <DxPaging :page-size="10"  />
+      <DxPaging :page-size="10" />
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
       <DxEditing
@@ -31,22 +30,22 @@
         refresh-mode="reshape"
         mode="row"
       />
-          <DxSpeedDialAction
+      <DxSpeedDialAction
         :index="1"
+        :visible="(Array.from(getMoules).length > 0)"
         :on-click="exportGrid"
         icon="exportpdf"
         label=""
       />
-     
+
       <DxColumn caption="Code Moule" data-field="codeMoule">
-        <DxRequiredRule/>
+        <DxRequiredRule />
       </DxColumn>
 
       <DxColumn caption="Designation" data-field="designation">
-        <DxRequiredRule/>
+        <DxRequiredRule />
       </DxColumn>
-
-     </DxDataGrid>
+    </DxDataGrid>
   </div>
 </template>
 <script>
@@ -69,14 +68,13 @@ import { exportDataGrid as exportDataGridToPdf } from "devextreme/pdf_exporter";
 import { mapGetters, mapActions } from "vuex";
 const gridRef = "grid";
 
-
 export default {
   components: {
     DxDataGrid,
     DxColumn,
     DxEditing,
     DxRequiredRule,
-     DxSpeedDialAction,
+    DxSpeedDialAction,
     DxFilterRow,
     DxLookup,
     DxPager,
@@ -85,8 +83,8 @@ export default {
   },
 
   data() {
-    return{
-      gridRef ,
+    return {
+      gridRef,
     };
   },
 
@@ -110,12 +108,12 @@ export default {
       updateMoule: "moule/updateMoule",
       deleteMoule: "moule/deleteMoule",
     }),
-     saveGridInstance: function(e) {
-            this.dataGridInstance = e.component;
-        },
-        refresh: function() {
-            this.dataGridInstance.refresh();
-        },
+    saveGridInstance: function (e) {
+      this.dataGridInstance = e.component;
+    },
+    refresh: function () {
+      this.dataGridInstance.refresh();
+    },
 
     async Insert(e) {
       await this.addMoule(e.data)
@@ -136,11 +134,9 @@ export default {
           notify("Le Moule a bien été modifié!", "success", 2000);
         })
         .catch((error) => {
-            console.log(error);
+          console.log(error);
           notify("Echec de modification!", "error", 2000);
-         
         });
-       
     },
 
     async Delete(e) {
@@ -154,8 +150,8 @@ export default {
           notify("Echec de suppression!", "error", 2000);
         });
     },
-         exportGrid() {
-           let moules = this.getMoules;
+    exportGrid() {
+      let moules = this.getMoules;
       if (!moules) {
         notify("Aucun données a exporter", "error", 2000);
         return;

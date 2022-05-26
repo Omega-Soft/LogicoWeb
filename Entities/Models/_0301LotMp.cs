@@ -13,6 +13,7 @@ namespace Entities.Models
         public int IdLot { get; set; }
         public string? CodeLot { get; set; }
         public DateTime? Journee { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual ICollection<_0301BonReceptionMp> _0301BonReceptionMps { get; set; }
     }

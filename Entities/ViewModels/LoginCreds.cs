@@ -1,4 +1,4 @@
-﻿namespace Logico.Controllers
+﻿namespace Logico.Entities.ViewModels
 {
     public class LoginCreds
     {

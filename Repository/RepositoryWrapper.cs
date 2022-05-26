@@ -6,10 +6,13 @@ namespace Repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private LogicoWebContext _context;
+        private IUserRepository _user;
+        private IGroupRepository _group;
+        private IRoleRepository _role;
+        private IPageRepository _page;
         private IArticleRepository _article;
         private IFournisseurRepository _fournisseur;
         private IMouleRepository _moule;
-        private IUserRepository _user;
         private IQualiteRepository _qualite;
         private IBateauRepository _bateau;
         private ITransporteurRepository _transporteur;
@@ -29,6 +32,42 @@ namespace Repository
                 }
 
                 return _user;
+            }
+        }
+        public IGroupRepository Group
+        {
+            get
+            {
+                if (_group == null)
+                {
+                    _group = new GroupRepository(_context);
+                }
+
+                return _group;
+            }
+        }
+        public IRoleRepository Role
+        {
+            get
+            {
+                if (_role == null)
+                {
+                    _role = new RoleRepository(_context);
+                }
+
+                return _role;
+            }
+        }
+        public IPageRepository Page
+        {
+            get
+            {
+                if (_page == null)
+                {
+                    _page = new PageRepository(_context);
+                }
+
+                return _page;
             }
         }
         public IArticleRepository Article
@@ -67,7 +106,6 @@ namespace Repository
                 return _moule;
             }
         }
-
         public IQualiteRepository Qualite
         {
             get
@@ -104,7 +142,6 @@ namespace Repository
                 return _camion;
             }
         }
-
         public ITransporteurRepository Transporteur
         {
             get
@@ -129,7 +166,6 @@ namespace Repository
                 return _origine;
             }
         }
-
         public IProvenanceRepository Provenance
 
         {
@@ -169,7 +205,6 @@ namespace Repository
                 return _lotMp;
             }
         }
-
 
         public RepositoryWrapper(LogicoWebContext context)
         {

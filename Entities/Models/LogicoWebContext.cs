@@ -39,7 +39,7 @@ namespace Entities.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-CNCGGML\\SOUKAINA_SERVER;Database=LogicoWeb;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=192.168.100.160;Database=LogicoWeb;User ID=sa;Password=Omega@@123");
             }
         }
 
@@ -60,6 +60,10 @@ namespace Entities.Models
                     .HasMaxLength(50)
                     .HasColumnName("codeGroup");
 
+                entity.Property(e => e.Deleted)
+                    .HasColumnName("deleted")
+                    .HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.Designation)
                     .HasMaxLength(50)
                     .HasColumnName("designation");
@@ -79,6 +83,10 @@ namespace Entities.Models
                 entity.Property(e => e.CodePage)
                     .HasMaxLength(50)
                     .HasColumnName("codePage");
+
+                entity.Property(e => e.Deleted)
+                    .HasColumnName("deleted")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Designation)
                     .HasMaxLength(50)
@@ -126,6 +134,10 @@ namespace Entities.Models
                     .IsUnique();
 
                 entity.Property(e => e.IdUser).HasColumnName("idUser");
+
+                entity.Property(e => e.Deleted)
+                    .HasColumnName("deleted")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IdGroup).HasColumnName("idGroup");
 
@@ -270,6 +282,10 @@ namespace Entities.Models
                     .HasColumnType("date")
                     .HasColumnName("dateBR");
 
+                entity.Property(e => e.Deleted)
+                    .HasColumnName("deleted")
+                    .HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.IdBateau).HasColumnName("idBateau");
 
                 entity.Property(e => e.IdCamion).HasColumnName("idCamion");
@@ -288,14 +304,14 @@ namespace Entities.Models
 
                 entity.Property(e => e.Montant).HasColumnName("montant");
 
-                entity.Property(e => e.NbrCaisse).HasColumnName("nbrCaisse");
+                entity.Property(e => e.NbCaisse).HasColumnName("nbCaisse");
 
-                entity.Property(e => e.NbrPalettes).HasColumnName("nbrPalettes");
+                entity.Property(e => e.NbPalette).HasColumnName("nbPalette");
 
-                entity.Property(e => e.NumBonPese)
+                entity.Property(e => e.NbonPese)
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("numBonPese");
+                    .HasColumnName("NBonPese");
 
                 entity.Property(e => e.Prevalidee).HasColumnName("prevalidee");
 
@@ -369,9 +385,9 @@ namespace Entities.Models
 
                 entity.Property(e => e.IdQualite).HasColumnName("idQualite");
 
-                entity.Property(e => e.MontantAchat).HasColumnName("montantAchat");
+                entity.Property(e => e.MntAchat).HasColumnName("mntAchat");
 
-                entity.Property(e => e.PrixUnitaire).HasColumnName("prixUnitaire");
+                entity.Property(e => e.Pu).HasColumnName("PU");
 
                 entity.Property(e => e.QtePayee).HasColumnName("qtePayee");
 
@@ -413,6 +429,10 @@ namespace Entities.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("codeLot");
+
+                entity.Property(e => e.Deleted)
+                    .HasColumnName("deleted")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Journee).HasColumnType("datetime");
             });
@@ -459,6 +479,15 @@ namespace Entities.Models
                     .IsUnicode(false)
                     .HasColumnName("codeFournisseur");
 
+                entity.Property(e => e.CodePostal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("codePostal");
+
+                entity.Property(e => e.DateAnouveau)
+                    .HasColumnType("date")
+                    .HasColumnName("dateAnouveau");
+
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
                     .IsUnicode(false)
@@ -469,15 +498,31 @@ namespace Entities.Models
                     .IsUnicode(false)
                     .HasColumnName("fax");
 
+                entity.Property(e => e.IsFrsCharges).HasColumnName("isFrsCharges");
+
+                entity.Property(e => e.IsFrsMp).HasColumnName("isFrsMP");
+
+                entity.Property(e => e.IsFrsPf).HasColumnName("isFrsPF");
+
                 entity.Property(e => e.RaisonSociale)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("raisonSociale");
 
+                entity.Property(e => e.Site)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("site");
+
                 entity.Property(e => e.Tel)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("tel");
+
+                entity.Property(e => e.Ville)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ville");
             });
 
             modelBuilder.Entity<_0600Moule>(entity =>

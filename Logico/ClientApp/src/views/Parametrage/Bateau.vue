@@ -19,7 +19,6 @@
       :repaint-changes-only="true"
       @selection-changed="selectedChanged"
     >
-
       <DxLoadPanel :enabled="true" />
       <DxPaging :page-size="10" />
       <DxPager :show-page-size-selector="true" :show-info="true" />
@@ -31,8 +30,9 @@
         refresh-mode="reshape"
         mode="row"
       />
-       <DxSpeedDialAction
+      <DxSpeedDialAction
         :index="1"
+        :visible="(Array.from(getBateaux).length > 0)"
         :on-click="exportGrid"
         icon="exportpdf"
         label=""

@@ -1,21 +1,15 @@
 <template>
   <div>
-    <h2 class="content-block">Fournisseurs</h2>
+    <h2 class="content-block">Droits d'Accèss</h2>
     <DxDataGrid
       :show-borders="true"
       :ref="gridRef"
-      :data-source="getFournisseurs"
+      :data-source="getRoles"
       :column-auto-width="true"
-      key-expr="idFournisseur"
-      @row-inserting="(e) => Insert(e)"
+      key-expr="idRole"
       @row-updated="(e) => Update(e)"
-      @row-removing="(e) => Delete(e)"
-      :focused-row-enabled="true"
-      :selection="{ mode: 'single' }"
+      :focused-row-enabled="false"
       class="content-block"
-      :column-hiding-enabled="true"
-      :allow-column-resizing="false"
-      column-resizing-mode="widget"
       :repaint-changes-only="true"
       @selection-changed="selectedChanged"
     >
@@ -25,100 +19,40 @@
       <DxFilterRow :visible="true" />
       <DxEditing
         :allow-updating="true"
-        :allow-deleting="true"
-        :allow-adding="true"
+        :allow-deleting="false"
+        :allow-adding="false"
         refresh-mode="reshape"
-        mode="popup"
+        mode="cell"
       >
-        <!-- <DxPopup
-          :show-title="true"
-          title="Fournisseur Info"
-        />
-          <DxForm>
-          <DxItem
-            :col-count="3"
-            :col-span="2"
-            item-type="group"
-          > -->
-        <DxColumn caption="Code Fournisseur" data-field="codeFournisseur">
-          <DxRequiredRule />
-        </DxColumn>
-
-        <DxColumn caption="Raison Sociale" data-field="raisonSociale">
-          <DxRequiredRule />
-        </DxColumn>
-
-        <DxColumn caption="Email" data-field="email">
-          <DxRequiredRule />
-          <DxEmailRule />
-        </DxColumn>
-
-        <!-- <DxItem
-              :col-span="2"
-              :editor-options="{ height: 100 }"
-              data-field="Notes"
-              editor-type="dxTextArea"
-            />
-          </DxItem> -->
-        <!-- 
-          <DxItem
-            :col-count="2"
-            :col-span="2"
-            item-type="group"
-            caption="Home Address"
-          > -->
-        <DxColumn caption="Adresse" data-field="adresse"> </DxColumn>
-
-        <DxColumn caption="Téléphone" data-field="tel"> </DxColumn>
-        <!-- </DxItem>
-        </DxForm>-->
       </DxEditing>
+
       <DxSpeedDialAction
         :index="1"
-        :visible="(Array.from(getFournisseurs).length > 0)"
+        :visible="false"
         :on-click="exportGrid"
         icon="exportpdf"
         label=""
       />
 
-      <DxColumn caption="Code Fournisseur" data-field="codeFournisseur">
-        <DxRequiredRule />
+      <DxColumn caption="Groupe" data-field="idGroup">
+        <DxLookup
+          :data-source="getGroups"
+          display-expr="designation"
+          value-expr="idGroup"
+        />
       </DxColumn>
-
-      <DxColumn caption="Raison Sociale" data-field="raisonSociale">
-        <DxRequiredRule />
+      <DxColumn caption="Page" data-field="idPage">
+        <DxLookup
+          :data-source="getPages"
+          display-expr="designation"
+          value-expr="idPage"
+        />
       </DxColumn>
+      <DxColumn caption="Consultation" data-field="read" />
+      <DxColumn caption="Ajout" data-field="add" />
+      <DxColumn caption="Modification" data-field="update" />
+      <DxColumn caption="Suppression" data-field="delete" />
 
-      <DxColumn caption="Email" data-field="email">
-        <DxRequiredRule />
-        <DxEmailRule />
-      </DxColumn>
-
-      <DxColumn caption="Adresse" data-field="adresse"> </DxColumn>
-
-      <DxColumn caption="Téléphone" data-field="tel"> </DxColumn>
-
-      <!-- <DxColumn
-        caption="Date A nouveau"
-        data-field="dateAnouveau"
-        data-type="date"
-      >
-      </DxColumn>
-
-      <DxColumn caption="Fax" data-field="fax"> </DxColumn>
-
-      <DxColumn caption="Site" data-field="site"> </DxColumn>
-
-      <DxColumn caption="Code Postal" data-field="codePostal"> </DxColumn>
-
-      <DxColumn caption="Ville" data-field="ville">
-      </DxColumn>
-
-      <DxColumn caption="IsFrsMP" data-field="isFrsMp"> </DxColumn>
-
-      <DxColumn caption="IsFrsPF" data-field="isFrsPf"> </DxColumn>
-
-      <DxColumn caption="IsFrsCharges" data-field="isFrsCharges"> </DxColumn>-->
     </DxDataGrid>
   </div>
 </template>
@@ -170,12 +104,15 @@ export default {
   },
 
   mounted: async function () {
-    await this.initFournisseurs();
+    await this.initRoles();
+    await this.initGroups();
+    await this.initPages();
   },
-
   computed: {
     ...mapGetters({
-      getFournisseurs: "fournisseur/getFournisseurs",
+      getRoles: "role/getRoles",
+      getGroups: "group/getGroups",
+      getPages: "page/getPages",
     }),
     grid() {
       return this.$refs[gridRef].instance;
@@ -184,10 +121,12 @@ export default {
 
   methods: {
     ...mapActions({
-      initFournisseurs: "fournisseur/initFournisseurs",
-      addFournisseur: "fournisseur/addFournisseur",
-      updateFournisseur: "fournisseur/updateFournisseur",
-      deleteFournisseur: "fournisseur/deleteFournisseur",
+      initRoles: "role/initRoles",
+      addRole: "role/addRole",
+      updateRole: "role/updateRole",
+      deleteRole: "role/deleteRole",
+      initGroups: "group/initGroups",
+      initPages: "page/initPages",
     }),
     saveGridInstance: function (e) {
       this.dataGridInstance = e.component;
@@ -195,12 +134,11 @@ export default {
     refresh: function () {
       this.dataGridInstance.refresh();
     },
-
     async Insert(e) {
-      await this.addFournisseur(e.data)
+      await this.addRole(e.data)
         .then((response) => {
           console.log(response);
-          notify("Le Fournissseur a été ajouté!", "success", 2000);
+          notify("Le Droit a été ajouté!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -209,10 +147,10 @@ export default {
     },
 
     async Update(e) {
-      await this.updateFournisseur(e.data)
+      await this.updateRole(e.data)
         .then((response) => {
           console.log(response);
-          notify("Le Fournisseur a bien été modifié!", "success", 2000);
+          notify("Le Droit a bien été modifié!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -221,10 +159,10 @@ export default {
     },
 
     async Delete(e) {
-      await this.deleteFournisseur(e.data.idFournisseur)
+      await this.deleteRole(e.data.idRole)
         .then((response) => {
           console.log(response);
-          notify("Le Fournisseur a bien été supprimé!", "success", 2000);
+          notify("Le Droit a bien été supprimé!", "success", 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -232,8 +170,8 @@ export default {
         });
     },
     exportGrid() {
-      let fournisseur = this.getFournisseurs;
-      if (!fournisseur) {
+      let role = this.getRoles;
+      if (!role) {
         notify("Aucun données a exporter", "error", 2000);
         return;
       }
@@ -260,7 +198,7 @@ export default {
             const pageHeight = pageSize.height
               ? pageSize.height
               : pageSize.getHeight();
-            const header = "Liste des Fournisseurs";
+            const header = "Liste des Utilisateurs";
             const footer = `Page ${i} sur ${pageCount}`;
 
             // Header
@@ -285,7 +223,7 @@ export default {
           }
         })
         .then(() => {
-          pdfDoc.save("Liste_des_Fournisseurs.pdf");
+          pdfDoc.save("Liste_des_Utilisateurs.pdf");
         });
     },
   },

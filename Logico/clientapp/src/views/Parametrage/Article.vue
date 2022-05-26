@@ -36,6 +36,7 @@
 
       <DxSpeedDialAction
         :index="1"
+        :visible="(Array.from(getArticles).length > 0)"
         :on-click="exportGrid"
         icon="exportpdf"
         label=""

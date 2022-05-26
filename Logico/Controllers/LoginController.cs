@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
+using Logico.Entities.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -27,7 +28,6 @@ namespace Logico.Controllers
             _config = config;
         }
 
-
         // Cryptage de mot de passe
         public static string CalculateMD5Hash(string input)
         {
@@ -44,7 +44,6 @@ namespace Logico.Controllers
             }
             return sb.ToString();
         }
-
 
         // login
         [HttpPost]
@@ -70,7 +69,7 @@ namespace Logico.Controllers
         {
             var signedUser = _repository.User.GetByCondition(user =>
                 user.Username == creds.username
-                && user.Password == creds.password// CalculateMD5Hash(creds.password) // crypter le mot de passe
+                && user.Password == CalculateMD5Hash(creds.password) // crypter le mot de passe
             ).FirstOrDefault();
 
             return signedUser;

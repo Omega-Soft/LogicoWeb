@@ -11,6 +11,7 @@ namespace Entities.Models
         public string? Nom { get; set; }
         public string? Prenom { get; set; }
         public int? IdGroup { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual WebGroupUser? IdGroupNavigation { get; set; }
     }

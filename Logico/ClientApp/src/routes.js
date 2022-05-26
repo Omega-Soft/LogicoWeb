@@ -5,6 +5,7 @@ function loadView(view) {
 }
 
 export default [
+// Dashboard ----------------------------------------------------------------------
   {
     path: "/home",
     name: "home",
@@ -14,6 +15,46 @@ export default [
     },
     component: loadView("home"),
   },
+
+// Administration ----------------------------------------------------------------
+  {
+    path: "/administration/users",
+    name: "users",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Administration/User"),
+  },
+  {
+    path: "/administration/groupes",
+    name: "groupes",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Administration/GroupUsers"),
+  },
+  {
+    path: "/administration/droits-access",
+    name: "droits-access",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Administration/DroitsAccess"),
+  },
+  {
+    path: "/administration/pages",
+    name: "pages",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Administration/Page"),
+  },
+
+// Parametrage ----------------------------------------------------------------
   {
     path: "/parametrage/article",
     name: "article",
@@ -95,6 +136,8 @@ export default [
     },
     component: loadView("Parametrage/Provenance"),
   },
+
+// Bon Reception MP ------------------------------------------------------------------------------------
   {
     path: "/list-bon-receptions",
     name: "list-bon-receptions",
@@ -104,6 +147,8 @@ export default [
     },
     component: loadView("BonReception/ListBR"),
   },
+
+// Test ------------------------------------------------------------------------------------------------
   {
     path: "/lot-receptions",
     name: "lot-receptions",
@@ -140,6 +185,8 @@ export default [
     },
     component: loadView("Test/TicketStore"),
   },
+
+// Login -----------------------------------------------------------------------------------------------
   {
     path: "/login",
     name: "login-form",
@@ -150,6 +197,8 @@ export default [
     },
     component: loadView("login-form"),
   },
+
+// Matching --------------------------------------------------------------------------------------------
   {
     path: "/",
     redirect: "/home",

@@ -58,10 +58,6 @@ export default {
       ],
     };
   },
-  beforeMount: function () {
-    console.log("master details ....");
-    console.log(this.tabs[0].data[0]);
-  }
 };
 </script>
 

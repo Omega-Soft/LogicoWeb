@@ -32,6 +32,7 @@
       />
       <DxSpeedDialAction
         :index="1"
+        :visible="(Array.from(getQualites).length > 0)"
         :on-click="exportGrid"
         icon="exportpdf"
         label=""
@@ -66,7 +67,7 @@ import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { exportDataGrid as exportDataGridToPdf } from "devextreme/pdf_exporter";
 import { mapGetters, mapActions } from "vuex";
-import Qualites from '@/store/modules/Parametrage/qualite';
+import Qualites from "@/store/modules/Parametrage/qualite";
 const gridRef = "grid";
 
 export default {
@@ -85,7 +86,7 @@ export default {
   },
 
   data() {
-     return {
+    return {
       gridRef,
     };
   },

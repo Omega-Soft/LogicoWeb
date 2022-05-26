@@ -14,13 +14,13 @@
       :selection="{ mode: 'single' }"
       class="content-block"
       :column-hiding-enabled="true"
-       :allow-column-resizing="false"
+      :allow-column-resizing="false"
       column-resizing-mode="widget"
-        :repaint-changes-only="true"
+      :repaint-changes-only="true"
       @selection-changed="selectedChanged"
     >
       <DxLoadPanel :enabled="true" />
-      <DxPaging :page-size="10"  />
+      <DxPaging :page-size="10" />
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
       <DxEditing
@@ -30,21 +30,21 @@
         refresh-mode="reshape"
         mode="row"
       />
-          <DxSpeedDialAction
+      <DxSpeedDialAction
         :index="1"
+        :visible="(Array.from(getOrigines).length > 0)"
         :on-click="exportGrid"
         icon="exportpdf"
         label=""
       />
-     
-        <DxColumn caption="Code Origine" data-field="codeOrigine">
-        <DxRequiredRule/>
+
+      <DxColumn caption="Code Origine" data-field="codeOrigine">
+        <DxRequiredRule />
       </DxColumn>
 
-       <DxColumn caption="Designation" data-field="designation">
-        <DxRequiredRule/>
-      </DxColumn> 
-
+      <DxColumn caption="Designation" data-field="designation">
+        <DxRequiredRule />
+      </DxColumn>
     </DxDataGrid>
   </div>
 </template>
@@ -75,7 +75,7 @@ export default {
     DxColumn,
     DxEditing,
     DxRequiredRule,
-     DxSpeedDialAction,
+    DxSpeedDialAction,
     DxFilterRow,
     DxLookup,
     DxEmailRule,
@@ -85,7 +85,7 @@ export default {
   },
 
   data() {
-     return {
+    return {
       gridRef,
     };
   },
@@ -110,12 +110,12 @@ export default {
       updateOrigine: "origine/updateOrigine",
       deleteOrigine: "origine/deleteOrigine",
     }),
-     saveGridInstance: function(e) {
-            this.dataGridInstance = e.component;
-        },
-        refresh: function() {
-            this.dataGridInstance.refresh();
-        },
+    saveGridInstance: function (e) {
+      this.dataGridInstance = e.component;
+    },
+    refresh: function () {
+      this.dataGridInstance.refresh();
+    },
 
     async Insert(e) {
       await this.addOrigine(e.data)
@@ -138,11 +138,9 @@ export default {
           notify("Le Origine a bien été modifié!", "success", 2000);
         })
         .catch((error) => {
-            console.log(error);
+          console.log(error);
           notify("Echec de modification!", "error", 2000);
-         
         });
-       
     },
 
     async Delete(e) {
@@ -156,7 +154,7 @@ export default {
           notify("Echec de suppression!", "error", 2000);
         });
     },
-         exportGrid() {
+    exportGrid() {
       let origine = this.getOrigines;
       if (!origine) {
         notify("Aucun données a exporter", "error", 2000);

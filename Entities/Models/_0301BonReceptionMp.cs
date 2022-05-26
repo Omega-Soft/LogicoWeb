@@ -13,10 +13,10 @@ namespace Entities.Models
         public int IdBr { get; set; }
         public string? CodeBr { get; set; }
         public float? Brute { get; set; }
-        public int? NbrPalettes { get; set; }
-        public string? NumBonPese { get; set; }
+        public int? NbPalette { get; set; }
+        public string? NbonPese { get; set; }
         public float? Tare { get; set; }
-        public int? NbrCaisse { get; set; }
+        public int? NbCaisse { get; set; }
         public bool? IsNegos { get; set; }
         public float? CoutAchat { get; set; }
         public float? PrixAchat { get; set; }
@@ -31,6 +31,7 @@ namespace Entities.Models
         public int? IdOrigine { get; set; }
         public int? IdBateau { get; set; }
         public int? IdFournisseur { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual _0300Bateau? IdBateauNavigation { get; set; }
         public virtual _0700Camion? IdCamionNavigation { get; set; }

@@ -14,14 +14,13 @@
       :selection="{ mode: 'single' }"
       class="content-block"
       :column-hiding-enabled="true"
-       :allow-column-resizing="false"
+      :allow-column-resizing="false"
       column-resizing-mode="widget"
-        :repaint-changes-only="true"
-      
+      :repaint-changes-only="true"
       @selection-changed="selectedChanged"
     >
       <DxLoadPanel :enabled="true" />
-      <DxPaging :page-size="10"  />
+      <DxPaging :page-size="10" />
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
       <DxEditing
@@ -31,32 +30,26 @@
         refresh-mode="reshape"
         mode="row"
       />
-       
-          <DxSpeedDialAction
+
+      <DxSpeedDialAction
         :index="1"
+        :visible="(Array.from(getTransporteurs).length > 0)"
         :on-click="exportGrid"
         icon="exportpdf"
         label=""
       />
-     
+
       <DxColumn caption="Code Transporteurs" data-field="code">
-        <DxRequiredRule/>
+        <DxRequiredRule />
       </DxColumn>
 
       <DxColumn caption="Raison Sociale" data-field="raisonSociale">
-        <DxRequiredRule/>
-      </DxColumn> 
-
-      <DxColumn caption="Adresse" data-field="adresse">
-      
+        <DxRequiredRule />
       </DxColumn>
 
-       <DxColumn caption="Téléphone" data-field="tel">
-        
-      </DxColumn>
+      <DxColumn caption="Adresse" data-field="adresse"> </DxColumn>
 
-  
-     
+      <DxColumn caption="Téléphone" data-field="tel"> </DxColumn>
     </DxDataGrid>
   </div>
 </template>
@@ -89,7 +82,7 @@ export default {
     DxRequiredRule,
     DxFilterRow,
     DxLookup,
-     DxSpeedDialAction,
+    DxSpeedDialAction,
     DxEmailRule,
     DxPager,
     DxPaging,
@@ -97,7 +90,7 @@ export default {
   },
 
   data() {
-     return {
+    return {
       gridRef,
     };
   },
@@ -122,12 +115,12 @@ export default {
       updateTransporteur: "transporteur/updateTransporteur",
       deleteTransporteur: "transporteur/deleteTransporteur",
     }),
-     saveGridInstance: function(e) {
-            this.dataGridInstance = e.component;
-        },
-        refresh: function() {
-            this.dataGridInstance.refresh();
-        },
+    saveGridInstance: function (e) {
+      this.dataGridInstance = e.component;
+    },
+    refresh: function () {
+      this.dataGridInstance.refresh();
+    },
 
     async Insert(e) {
       await this.addTransporteur(e.data)
@@ -148,11 +141,9 @@ export default {
           notify("Le Transporteur a bien été modifié!", "success", 2000);
         })
         .catch((error) => {
-            console.log(error);
+          console.log(error);
           notify("Echec de modification!", "error", 2000);
-         
         });
-       
     },
 
     async Delete(e) {
@@ -166,7 +157,7 @@ export default {
           notify("Echec de suppression!", "error", 2000);
         });
     },
-         exportGrid() {
+    exportGrid() {
       let transporteur = this.getTransporteurs;
       if (!transporteur) {
         notify("Aucun données a exporter", "error", 2000);
