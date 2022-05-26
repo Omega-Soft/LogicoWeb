@@ -55,11 +55,11 @@
 
       <DxColumn caption="Prénom" data-field="prenom"></DxColumn>
       <DxColumn caption="Groupe" data-field="idGroup">
-        <!-- <DxLookup
-          :data-source="getGroupes"
+        <DxLookup
+          :data-source="getGroups"
           display-expr="designation"
           value-expr="idGroup"
-        /> -->
+        />
       </DxColumn>
     </DxDataGrid>
   </div>
@@ -113,10 +113,12 @@ export default {
 
   mounted: async function () {
     await this.initUsers();
+    await this.initGroups();
   },
   computed: {
     ...mapGetters({
       getUsers: "user/getUsers",
+      getGroups: "group/getGroups",
     }),
     grid() {
       return this.$refs[gridRef].instance;
@@ -129,6 +131,7 @@ export default {
       addUser: "user/addUser",
       updateUser: "user/updateUser",
       deleteUser: "user/deleteUser",
+      initGroups: "group/initGroups",
     }),
     saveGridInstance: function (e) {
       this.dataGridInstance = e.component;

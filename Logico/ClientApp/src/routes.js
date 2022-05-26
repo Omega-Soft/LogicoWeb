@@ -44,6 +44,15 @@ export default [
     },
     component: loadView("Administration/DroitsAccess"),
   },
+  {
+    path: "/administration/pages",
+    name: "pages",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Administration/Page"),
+  },
 
 // Parametrage ----------------------------------------------------------------
   {

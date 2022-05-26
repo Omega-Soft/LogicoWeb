@@ -14,6 +14,7 @@ namespace Entities.Models
         public int IdGroup { get; set; }
         public string? CodeGroup { get; set; }
         public string? Designation { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual ICollection<WebRole> WebRoles { get; set; }
         public virtual ICollection<WebUser> WebUsers { get; set; }

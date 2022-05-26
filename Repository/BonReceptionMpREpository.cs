@@ -18,7 +18,7 @@ namespace Repository
                     x.IdLot,
                     x.IdBr,
                     x.CodeBr,
-                    x.NumBonPese,
+                    NumBonPese = x.NbonPese,
                     x.IdFournisseur,
                     x.DateBr,
                     x.IdCamion,
@@ -35,10 +35,10 @@ namespace Repository
                         y.IdQualite,
                         y.QteRecue,
                         y.QtePayee,
-                        y.PrixUnitaire,
+                        PrixUnitaire = y.Pu,
                         y.Eventre,
                         y.Histamine,
-                        y.MontantAchat
+                        MontantAchat = y.MntAchat
                     }),
                 })
                 .ToList();
@@ -53,7 +53,7 @@ namespace Repository
                     x.IdLot,
                     x.IdBr,
                     x.CodeBr,
-                    x.NumBonPese,
+                    NumBonPese = x.NbonPese,
                     x.IdFournisseur,
                     x.DateBr,
                     x.IdCamion,
@@ -70,10 +70,10 @@ namespace Repository
                         y.IdQualite,
                         y.QteRecue,
                         y.QtePayee,
-                        y.PrixUnitaire,
+                        PrixUnitaire = y.Pu,
                         y.Eventre,
                         y.Histamine,
-                        y.MontantAchat
+                        MontantAchat = y.MntAchat
                     }),
                 })
                 .ToList();

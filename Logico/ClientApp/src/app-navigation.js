@@ -24,6 +24,11 @@ export default [
         icon: "",
         path: "/administration/droits-access",
       },
+      {
+        text: "Interfaces d'Application",
+        icon: "",
+        path: "/administration/pages",
+      },
     ],
   },
 

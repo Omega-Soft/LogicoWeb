@@ -9,10 +9,10 @@ namespace Entities.Models
         public string? CodeDetailsBr { get; set; }
         public float? QteRecue { get; set; }
         public float? QtePayee { get; set; }
-        public float? PrixUnitaire { get; set; }
+        public float? Pu { get; set; }
         public double? Eventre { get; set; }
         public double? Histamine { get; set; }
-        public double? MontantAchat { get; set; }
+        public double? MntAchat { get; set; }
         public int? IdBr { get; set; }
         public int? IdArticle { get; set; }
         public int? IdMoule { get; set; }
