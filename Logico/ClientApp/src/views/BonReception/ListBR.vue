@@ -37,7 +37,7 @@
         </DxColumn>
 
        <DxColumn 
-       data-field="NbonPese"
+       data-field="numBonPese"
        caption="Bon Pese" />
       
 
