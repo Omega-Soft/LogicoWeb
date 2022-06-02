@@ -31,5 +31,16 @@ namespace Repository
             return GetByCondition(x => x.IdRole.Equals(idRole)).FirstOrDefault();
 #pragma warning restore CS8603 // Possible null reference return.
         }
+
+        public IEnumerable<object> GetRoleByGroup(int idGroup)
+        {
+            return GetByCondition(x => x.IdGroup == idGroup && x.Read == true).Select(x => new
+            {
+                page = x.IdPageNavigation.CodePage,
+                x.Add,
+                x.Update,
+                x.Delete
+            }).ToList();
+        }
     }
 }

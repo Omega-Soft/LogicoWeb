@@ -6,5 +6,6 @@ namespace Contracts
     {
         public IEnumerable<Object> GetAllRoles();
         public WebRole GetRoleById(int idRole);
+        public IEnumerable<Object> GetRoleByGroup(int idGroup);
     }
 }

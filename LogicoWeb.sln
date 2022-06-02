@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logico", "Logico\Logico.csproj", "{C142BE52-6C55-4AA7-A0D1-38FAB2D550F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logico", "Logico\Logico.csproj", "{C142BE52-6C55-4AA7-A0D1-38FAB2D550F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{49D8ABCD-7F60-4BEF-AE71-EE6330C499B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{49D8ABCD-7F60-4BEF-AE71-EE6330C499B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService\LoggerService.csproj", "{DE7FCA40-B212-499A-8C55-B20C16DF3421}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerService\LoggerService.csproj", "{DE7FCA40-B212-499A-8C55-B20C16DF3421}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{A4822E9F-CEE0-4CF4-A38C-2A9E89EE6A49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{A4822E9F-CEE0-4CF4-A38C-2A9E89EE6A49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{8262D558-161D-4FBA-9917-F592050B3C3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{8262D558-161D-4FBA-9917-F592050B3C3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

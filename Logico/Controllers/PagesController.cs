@@ -56,6 +56,20 @@ namespace Logico.Controllers
                 _repository.Page.Create(page);
                 _repository.Save();
 
+                List<WebGroupUser> groops = _repository.Group.GetAll().ToList();
+                foreach (var group in groops)
+                {
+                    WebRole role = new WebRole();
+                    role.IdGroup = group.IdGroup;
+                    role.IdPage = page.IdPage;
+                    role.Read = false;
+                    role.Add = false;
+                    role.Update = false;
+                    role.Delete = false;
+                    _repository.Role.Create(role);
+                    _repository.Save();
+                }
+
                 return Ok(page);
             }
             catch (Exception ex)

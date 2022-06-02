@@ -25,6 +25,7 @@ import { sizes } from '../utils/media-query';
 import navigation from '../app-navigation';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router'; 
+import {store} from "../store"
 
 export default {
   props: {
@@ -34,12 +35,23 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
+    const pages = store.getters["login/getUserPages"].map((p) => p.page);
+
     const isLargeScreen = sizes()['screen-large'];
-    const items = navigation.map((item) => {
+    let allItems = navigation.map((item) => {
       if(item.path && !(/^\//.test(item.path))){ 
         item.path = `/${item.path}`;
       }
       return {...item, expanded: isLargeScreen} 
+    });
+
+    var items = [];
+    allItems.map((item) => {
+      pages.forEach(p => {
+        if (item.name.includes(p) || (item.name.includes("DSB") && items.indexOf(item) === -1)) {
+          items.push(item);
+        }
+      });
     });
 
     const treeViewRef = ref(null);

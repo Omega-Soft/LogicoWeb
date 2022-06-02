@@ -18,7 +18,7 @@
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
       <DxEditing
-        :allow-updating="true"
+        :allow-updating="userRoles.update"
         :allow-deleting="false"
         :allow-adding="false"
         refresh-mode="reshape"
@@ -52,7 +52,6 @@
       <DxColumn caption="Ajout" data-field="add" />
       <DxColumn caption="Modification" data-field="update" />
       <DxColumn caption="Suppression" data-field="delete" />
-
     </DxDataGrid>
   </div>
 </template>
@@ -113,7 +112,11 @@ export default {
       getRoles: "role/getRoles",
       getGroups: "group/getGroups",
       getPages: "page/getPages",
+      getUserPages: "login/getUserPages",
     }),
+    userRoles() {
+      return this.getUserPages.find((e) => e.page === "ADMIN");
+    },
     grid() {
       return this.$refs[gridRef].instance;
     },

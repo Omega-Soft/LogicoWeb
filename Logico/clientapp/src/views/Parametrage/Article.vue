@@ -28,15 +28,15 @@
         <DxItem name="searchPanel" />
       </DxToolbar> -->
       <DxEditing
-        :allow-updating="true"
-        :allow-deleting="true"
-        :allow-adding="true"
+        :allow-updating="userRoles.update"
+        :allow-deleting="userRoles.delete"
+        :allow-adding="userRoles.add"
         mode="row"
       />
 
       <DxSpeedDialAction
         :index="1"
-        :visible="(Array.from(getArticles).length > 0)"
+        :visible="Array.from(getArticles).length > 0"
         :on-click="exportGrid"
         icon="exportpdf"
         label=""
@@ -97,12 +97,18 @@ export default {
 
   mounted: async function () {
     await this.initArticles();
+    console.log("this.userRoles");
+    console.log(this.userRoles);
   },
 
   computed: {
     ...mapGetters({
       getArticles: "article/getArticles",
+      getUserPages: "login/getUserPages",
     }),
+    userRoles() {
+      return this.getUserPages.find((e) => e.page === "PRMT");
+    },
     grid() {
       return this.$refs[gridRef].instance;
     },
