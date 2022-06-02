@@ -24,9 +24,9 @@
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
       <DxEditing
-        :allow-updating="true"
-        :allow-deleting="true"
-        :allow-adding="true"
+        :allow-updating="userRoles.update"
+        :allow-deleting="userRoles.delete"
+        :allow-adding="userRoles.add"
         refresh-mode="reshape"
         mode="popup"
       >
@@ -75,7 +75,7 @@
       </DxEditing>
       <DxSpeedDialAction
         :index="1"
-        :visible="(Array.from(getFournisseurs).length > 0)"
+        :visible="Array.from(getFournisseurs).length > 0"
         :on-click="exportGrid"
         icon="exportpdf"
         label=""
@@ -176,7 +176,11 @@ export default {
   computed: {
     ...mapGetters({
       getFournisseurs: "fournisseur/getFournisseurs",
+      getUserPages: "login/getUserPages",
     }),
+    userRoles() {
+      return this.getUserPages.find((e) => e.page === "PRMT");
+    },
     grid() {
       return this.$refs[gridRef].instance;
     },

@@ -1,11 +1,13 @@
 export default [
   {
+    name: "DSB",
     text: "Home",
     path: "/home",
     icon: "home",
   },
 
   {
+    name: "ADMIN",
     text: "Administration",
     icon: "key",
     items: [
@@ -33,6 +35,7 @@ export default [
   },
 
   {
+    name: "PRMT",
     text: "Paramétrage",
     icon: "preferences",
     items: [
@@ -76,6 +79,7 @@ export default [
   },
 
   {
+    name: "RCMP",
     text: "Réception MP",
     icon: "columnchooser",
     items: [
@@ -91,6 +95,7 @@ export default [
   },
   
   {
+    name: "TKT",
     text: "Gestion Test",
     icon: "folder",
     items: [

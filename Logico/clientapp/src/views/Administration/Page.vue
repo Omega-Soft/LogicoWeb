@@ -24,9 +24,9 @@
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
       <DxEditing
-        :allow-updating="true"
-        :allow-deleting="true"
-        :allow-adding="true"
+        :allow-updating="userRoles.update"
+        :allow-deleting="userRoles.delete"
+        :allow-adding="userRoles.add"
         refresh-mode="reshape"
         mode="row"
       >
@@ -90,7 +90,11 @@ export default {
   computed: {
     ...mapGetters({
       getPages: "page/getPages",
+      getUserPages: "login/getUserPages",
     }),
+    userRoles() {
+      return this.getUserPages.find((e) => e.page === "ADMIN");
+    },
     grid() {
       return this.$refs[gridRef].instance;
     },

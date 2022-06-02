@@ -57,7 +57,8 @@ namespace Logico.Controllers
             if (currentUser != null)
             {
                 var tokenString = GenerateJWT(currentUser);
-                response = Ok(new { token = tokenString, currentUser });
+                var pages = _repository.Role.GetRoleByGroup(currentUser.IdGroup??-1);
+                response = Ok(new { token = tokenString, currentUser, pages });
             }
             else response = Unauthorized("Username or password incorrect !!!");
 

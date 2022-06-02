@@ -25,9 +25,9 @@
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
       <DxEditing
-        :allow-updating="true"
-        :allow-deleting="true"
-        :allow-adding="true"
+        :allow-updating="userRoles.update"
+        :allow-deleting="userRoles.delete"
+        :allow-adding="userRoles.add"
         refresh-mode="reshape"
         mode="popup"
       >
@@ -119,7 +119,11 @@ export default {
     ...mapGetters({
       getUsers: "user/getUsers",
       getGroups: "group/getGroups",
+      getUserPages: "login/getUserPages",
     }),
+    userRoles() {
+      return this.getUserPages.find((e) => e.page === "ADMIN");
+    },
     grid() {
       return this.$refs[gridRef].instance;
     },
@@ -140,10 +144,9 @@ export default {
       this.dataGridInstance.refresh();
     },
     editorLauncher() {
-      console.log("EditorLauncher................................");
-      var pwd = Array.from(document.getElementsByClassName(
-        "dx-texteditor-input"
-      )).find(x=>x.id.includes("password"));
+      var pwd = Array.from(
+        document.getElementsByClassName("dx-texteditor-input")
+      ).find((x) => x.id.includes("password"));
       if (pwd != null) {
         pwd.type = "password";
       }
