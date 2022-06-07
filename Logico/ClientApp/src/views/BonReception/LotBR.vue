@@ -58,7 +58,7 @@
               label-mode="floating"
               value-expr="idLot"
               width="225"
-               :value="getdate(selectedLot)"
+              :value="getdate(selectedLot)"
               type="date"
             />
           </div>
@@ -234,16 +234,22 @@ export default {
       this.grid.Reload();
     },
     getdate: function (id) {
-     this.lotDate= Array.from(this.getLots).find(
-        (x) => JSON.stringify(x).idLot == id
-      ).journee;
-      return this.lotDate
+      console.log("-------------------------------------------------------");
+      console.log(id);
+      if (id > 0) {
+        this.lotDate = Array.from(this.getLots).find(
+          (x) => JSON.stringify(x).idLot == id
+        ).journee;
+        return this.lotDate;
+      }
     },
     onSelectLot: function (e) {
       console.log(e.value);
-      console.log(Array.from(this.getLots).find(
+      console.log(
+        Array.from(this.getLots).find(
           (x) => JSON.stringify(x).idLot == this.idLot
-       ));
+        )
+      );
 
       console.log(
         Array.from(this.getLots).find(

@@ -33,6 +33,13 @@
       >
       </DxEditing>
 
+        <DxPopup
+          :show-title="true"
+          :width="700"
+          :height="525"
+          title="Utilisateur"
+        />
+
       <DxSpeedDialAction
         :index="1"
         :visible="Array.from(getUsers).length > 0"

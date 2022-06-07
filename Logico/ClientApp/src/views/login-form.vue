@@ -1,13 +1,15 @@
 <template>
-  <form class="login-form" @submit.prevent="onSubmit">
-    <dx-form :form-data="formData" :disabled="loading">
+  <form class="login-form" @submit.prevent="onSubmit" >
+            
+
+    <dx-form :form-data="formData"  :disabled="loading">
       <dx-item
         data-field="username"
         editor-type="dxTextBox"
         :editor-options="{
           stylingMode: 'filled',
-          placeholder: 'UserName',
-          mode: 'text',
+          placeholder: 'Identifiant',
+          mode: 'text', 
         }"
       >
         <dx-required-rule message="Username requis!" />
@@ -35,7 +37,7 @@
           :use-submit-behavior="true"
         >
         </dx-button-options>
-      </dx-button-item>
+      </dx-button-item>       
       <template #signInTemplate>
         <div>
           <span class="dx-button-text">
@@ -125,5 +127,6 @@ export default {
     margin: 10px 0;
     color: rgba($base-text-color, alpha($base-text-color) * 0.7);
   }
+
 }
 </style>
