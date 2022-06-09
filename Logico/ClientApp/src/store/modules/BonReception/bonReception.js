@@ -105,6 +105,32 @@ const BonReceptions = {
           });
       });
     },
+
+    // Generate Code Lot
+    generateCodeLot: ({ commit }, date) => {
+      return new Promise((resolve, reject) => {
+        Api.get(LOT_END_POINT + "GenerateCodeLot/" + date)
+          .then((response) => {
+            resolve(response.data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+
+    // Add BonReception
+    addLot: ({ commit }, payload) => {
+      return new Promise((resolve, reject) => {
+        Api.post(LOT_END_POINT, payload)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
   },
 };
 export default BonReceptions;

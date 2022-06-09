@@ -30,6 +30,7 @@
       <DxToolbar>
         <DxItem location="before" template="codeLot" />
         <DxItem location="before" template="dateLot" />
+        <DxItem location="before" template="btnAddLot" />
       </DxToolbar>
 
       <template #codeLot>
@@ -44,26 +45,41 @@
               value-expr="idLot"
               v-model:value="selectedLot"
               @value-changed="onSelectLot"
+              v-if="!insertMode"
             />
+            <DxTextBox 
+              label="Code Lot MP"
+              label-mode="floating"
+              width="225"
+              v-model:value="codeLot"
+              v-else/>
           </div>
         </div>
       </template>
 
       <template #dateLot>
-        <div class="dx-field">
-          <div class="dx-field-value">
-            <DxDateBox
-              label="Date Lot MP"
-              display-expr="journee"
-              label-mode="floating"
-              value-expr="idLot"
-              width="225"
-              :value="getdate(selectedLot)"
-              type="date"
-            />
-          </div>
-        </div>
+        <!-- <div class="dx-field">
+          <div class="dx-field-value"> -->
+        <DxDateBox
+          label="Date Lot MP"
+          display-expr="journee"
+          label-mode="floating"
+          value-expr="idLot"
+          v-model:value="dateLot"
+          type="date"
+          :read-only="!insertMode"
+          @value-changed="onChangeDate"
+        />
+        <!-- </div>
+        </div> -->
       </template>
+
+      <template #btnAddLot>
+        <DxButton v-if="!insertMode" icon="plus" @click="btnAddLotClick()" />
+        <DxButton v-if="insertMode" icon="save" @click="btnSaveLotClick()" />
+        <DxButton v-if="insertMode" icon="close" @click="btnCancelLotClick()" />
+      </template>
+
       <DxColumn data-field="numBonPese" caption="Bon Pese" />
 
       <DxColumn data-field="codeBr" caption="N° BR" :width="100" />
@@ -167,7 +183,8 @@ import DetailTemplate from "../../components/detail-bon-reception.vue";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { exportDataGrid as exportDataGridToPdf } from "devextreme/pdf_exporter";
-
+import DxButton from "devextreme-vue/button";
+import DxTextBox from 'devextreme-vue/text-box';
 export default {
   data() {
     return {
@@ -175,7 +192,9 @@ export default {
       selectedLot: -1,
       selectedRowId: -1,
       selectedRowIndex: -1,
-      lotDate: null,
+      codeLot: null,
+      dateLot: null,
+      insertMode: false,
     };
   },
   mounted: async function () {
@@ -203,6 +222,8 @@ export default {
     ...mapActions({
       initBonReceptionLot: "bonReception/initBonReceptionLot",
       initLots: "bonReception/initLots",
+      generateCodeLot: "bonReception/generateCodeLot",
+      addLot: "bonReception/addLot",
       initCamions: "camion/initCamions",
       initFournisseurs: "fournisseur/initFournisseurs",
       initOrigines: "origine/initOrigines",
@@ -233,38 +254,55 @@ export default {
       );
       this.grid.Reload();
     },
-    getdate: function (id) {
-      console.log("-------------------------------------------------------");
-      console.log(id);
-      if (id > 0) {
-        this.lotDate = Array.from(this.getLots).find(
-          (x) => JSON.stringify(x).idLot == id
-        ).journee;
-        return this.lotDate;
-      }
+    getdate: function () {
+      return this.dateLot;
     },
     onSelectLot: function (e) {
-      console.log(e.value);
-      console.log(
-        Array.from(this.getLots).find(
-          (x) => JSON.stringify(x).idLot == this.idLot
-        )
+      let lots = Array.from(
+        this.getLots.map((x) => {
+          return {
+            idLot: x.idLot,
+            codeLot: x.codeLot,
+            journee: x.journee,
+          };
+        })
       );
-
-      console.log(
-        Array.from(this.getLots).find(
-          (x) => JSON.stringify(x).idLot == this.idLot
-        ).journee
-      );
-
-      this.lotDate = Array.from(this.getLots).find(
-        (x) => JSON.stringify(x).idLot == this.idLot
-      ).journee;
-
-      console.log(this.lotDate);
-
+      this.dateLot = lots.find((x) => x.idLot == e.value).journee;
       this.initBonReceptionLot(e.value);
     },
+
+    btnAddLotClick: function(){
+      this.insertMode = true;
+      this.dateLot = null;
+    },
+    btnSaveLotClick: async function(){
+      this.insertMode = false;
+      console.log("codeLot => " + this.codeLot);
+      console.log("dateLot => " + new Date(this.dateLot));
+      await this.addLot({codeLot: this.codeLot, journee: new Date(this.dateLot)})
+      .then((response) => {
+        this.initLots().then(() => {
+          this.selectedLot = response.data.idLot;
+        })
+      })
+    },
+    btnCancelLotClick: function(){
+      this.insertMode = false;
+      this.codeLot = null;
+      this.dateLot = null;
+      this.selectedLot = -1;
+    },
+
+    onChangeDate: function(){
+      if (this.insertMode && this.dateLot != null) {
+        let date = this.dateLot.toISOString();
+        this.generateCodeLot(date.toString().substring(0, 10))
+        .then((response) => {
+            this.codeLot = response;
+        });
+      }
+    }
+
   },
   components: {
     DxDataGrid,
@@ -281,6 +319,8 @@ export default {
     DxSelectBox,
     DxSpeedDialAction,
     DetailTemplate,
+    DxButton,
+    DxTextBox,
   },
 };
 </script>

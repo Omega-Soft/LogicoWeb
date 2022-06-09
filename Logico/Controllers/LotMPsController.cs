@@ -152,6 +152,42 @@ namespace Logico.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+        // GET api/<LotMPsController>/5
+        [HttpGet("GenerateCodeLot/{date}")]
+        public IActionResult GenerateCodeLot(string date)
+        {
+            var dateLot = DateTime.ParseExact(date, "yyyy-MM-dd", null);
+            var prefix = "LMP-";
+            var sufix = "/" + dateLot.Month + "-" + dateLot.Year.ToString().Substring(2);
+            var num = "";
+            var code = "";
+
+            try
+            {
+                var lot = _repository.LotMp.GetAll().Where(x => x.CodeLot.StartsWith("LMP")).ToList().LastOrDefault();
+                if (lot is null)
+                {
+                    num = "0001";
+                }
+                else
+                {
+                    var n = (int.Parse(lot.CodeLot.Substring(4, 4))+1);
+                    if (n > 0 && n < 10) num = "000" + n;
+                    else if (n > 9 && n < 100) num = "00" + n;
+                    else if (n > 99 && n < 1000) num = "0" + n;
+                    else num = "" + n;
+                }
+                code = prefix + num + sufix;
+                return Ok(code);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetLotMpById action: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
 
