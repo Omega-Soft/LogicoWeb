@@ -20,31 +20,60 @@ namespace Logico.Controllers
             _repository = repository;
         }
         // GET: api/LotMPsController/NextBR
-        [HttpGet("CodeBR")]
+        [HttpGet("GenerateCodeBR")]
         public async Task<ActionResult> GenerateCodeBR()
         {
+            var prefix = "BR-";
+            var num = "";
+            var code = "";
+
             try
             {
-                int num = 1;
-                var count = _repository.BonReceptionMp.GetAllBonReceptions().Count();
-                var prefix = "BR-";
-
-                if (_repository.BonReceptionMp.GetAllBonReceptions().Any())
+                var lot = _repository.BonReceptionMp.GetAll().Where(x => x.CodeBr.StartsWith("BR")).ToList().LastOrDefault();
+                if (lot is null)
                 {
-                    var lastBr = _repository.BonReceptionMp.GetAll().OrderBy(x => x.IdBr).LastOrDefault().CodeBr;
-                    num = int.Parse(lastBr, 0) + 1;
-
-                    if (num > 0 && num < 10) prefix += "000";
-                    else if (num > 9 && num < 100) prefix += "00";
-                    else if (num > 99 && num < 1000) prefix += "0";
+                    num = "0001";
                 }
-
-                return Ok(prefix + num);
+                else
+                {
+                    var n = (int.Parse(lot.CodeBr.Substring(3, 4)) + 1);
+                    if (n > 0 && n < 10) num = "000" + n;
+                    else if (n > 9 && n < 100) num = "00" + n;
+                    else if (n > 99 && n < 1000) num = "0" + n;
+                    else num = "" + n;
+                }
+                code = prefix + num;
+                return Ok(code);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return BadRequest(e);
+                _logger.LogError($"Something went wrong inside GenerateCodeBR action: {ex.Message}");
+                return BadRequest(ex.Message);
             }
+
+
+            //try
+            //{
+            //    int num = 1;
+            //    var count = _repository.BonReceptionMp.GetAllBonReceptions().Count();
+            //    var prefix = "BR-";
+
+            //    if (_repository.BonReceptionMp.GetAllBonReceptions().Any())
+            //    {
+            //        var lastBr = _repository.BonReceptionMp.GetAll().OrderBy(x => x.IdBr).LastOrDefault().CodeBr;
+            //        num = int.Parse(lastBr, 0) + 1;
+
+            //        if (num > 0 && num < 10) prefix += "000";
+            //        else if (num > 9 && num < 100) prefix += "00";
+            //        else if (num > 99 && num < 1000) prefix += "0";
+            //    }
+
+            //    return Ok(prefix + num);
+            //}
+            //catch (Exception e)
+            //{
+            //    return BadRequest(e);
+            //}
         }
 
 

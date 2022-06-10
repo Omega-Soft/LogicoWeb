@@ -184,7 +184,7 @@ namespace Logico.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside GetLotMpById action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside GenerateCodeLot action: {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }

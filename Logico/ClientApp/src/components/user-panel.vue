@@ -68,7 +68,7 @@ export default {
     .user-image {
       width: 100%;
       height: 100%;
-      background: url("https://js.devexpress.com/Demos/WidgetsGallery/JSDemos/images/employees/06.png")
+      background: url("https://cdn-icons-png.flaticon.com/512/3135/3135715.png")
         no-repeat #fff;
       background-size: cover;
     }

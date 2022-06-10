@@ -39,7 +39,7 @@ const BonReceptions = {
       });
     },
 
-
+    // Initialize BonReceptions LOT (Get BRs by Lot)
     initBonReceptionLot: ({ commit },idLot) => {
       return new Promise((resolve, reject) => {
         Api.get(MAIN_END_POINT + "Lot/" + idLot)
@@ -52,12 +52,26 @@ const BonReceptions = {
           });
       });
     },
+
     // Initialize LOTs (Get all LOTs)
     initLots: ({ commit }) => {
       return new Promise((resolve, reject) => {
         Api.get(LOT_END_POINT)
           .then((response) => {
             commit("setLots", response.data);
+            resolve(response.data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+
+    // Generate Code BR
+    generateCodeBR: ({ commit }) => {
+      return new Promise((resolve, reject) => {
+        Api.get(MAIN_END_POINT + "GenerateCodeBR")
+          .then((response) => {
             resolve(response.data);
           })
           .catch((error) => {
@@ -94,7 +108,6 @@ const BonReceptions = {
 
     // Delete BonReception
     deleteBonReception: ({ commit }, idBR) => {
-      console.log(!!commit);
       return new Promise((resolve, reject) => {
         Api.delete(MAIN_END_POINT + idBR)
           .then((response) => {
