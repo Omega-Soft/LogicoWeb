@@ -147,6 +147,15 @@ export default [
     },
     component: loadView("BonReception/ListBR"),
   },
+  {
+    name: "gestion-bon-reception",
+    path: "/gestion-bon-reception/:action/:id",
+    meta: { 
+      requiresAuth: true,
+      layout: defaultLayout
+    },
+    component: loadView("BonReception/gestion-bon-reception")
+  },
 
 // Test ------------------------------------------------------------------------------------------------
   {

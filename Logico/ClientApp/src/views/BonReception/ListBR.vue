@@ -194,7 +194,7 @@ export default {
     addBR: function () {
       this.$router.push({
         name: "gestion-bon-reception",
-        params: { action: "Ajouter", id: "new" },
+        params: { action: "Ajouter", id: "nouveau" },
       });
     },
     updateBR: function () {
