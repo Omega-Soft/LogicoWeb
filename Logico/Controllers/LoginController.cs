@@ -71,7 +71,15 @@ namespace Logico.Controllers
             var signedUser = _repository.User.GetByCondition(user =>
                 user.Username == creds.username
                 && user.Password == CalculateMD5Hash(creds.password) // crypter le mot de passe
-            ).FirstOrDefault();
+            ).Select(x => new WebUser
+            {
+                IdUser = x.IdUser,
+                Username = x.Username,
+                Nom = x.Nom,
+                Prenom = x.Prenom,
+                IdGroup = x.IdGroup,
+                IdGroupNavigation = x.IdGroupNavigation
+            }).FirstOrDefault();
 
             return signedUser;
         }

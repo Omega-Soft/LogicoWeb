@@ -86,7 +86,6 @@ export default {
     }),
     onSubmit: function () {
       //  this.loading = true;
-      console.log(this.formData);
       this.loginAction(this.formData)
         .then(() => {
           this.$router.push("/home");
