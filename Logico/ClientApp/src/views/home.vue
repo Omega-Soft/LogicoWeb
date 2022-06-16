@@ -158,7 +158,7 @@ export default {
         ];
         break;
 
-      case grp.includes("control"):
+      case grp.includes("contr"):
         this.dsItems = [
           {
             title: "Bon Réception",
@@ -181,6 +181,7 @@ export default {
       default:
         break;
     }
+    console.log(this.dsItems);
   },
 };
 </script>
