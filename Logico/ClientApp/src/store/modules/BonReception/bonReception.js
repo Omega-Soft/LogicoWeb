@@ -104,11 +104,10 @@ const BonReceptions = {
         
         Api.post(MAIN_END_POINT, BR)
           .then((response) => {
-            console.log("Store => Added...!!!");
             resolve(response);
+            commit("setCurrentBR", null);
           })
           .catch((error) => {
-            console.log("Store => Catch...!!!");
             reject(error);
           });
       });
@@ -117,7 +116,26 @@ const BonReceptions = {
     // Update BonReception
     updateBonReception: ({ getters }) => {
       return new Promise((resolve, reject) => {
-        Api.put(MAIN_END_POINT + getters.getCurrentBR.idBonReception, getters.getCurrentBR)
+
+        let BR = {
+          idBr: getters.getCurrentBR.idBR,
+          codeBr: getters.getCurrentBR.numBonReception || null,
+          idCamion: getters.getCurrentBR.Camion || null,
+          idFournisseur: getters.getCurrentBR.Fournisseur || null,
+          idOrigine: getters.getCurrentBR.Origine || null,
+          idProvenance: getters.getCurrentBR.Provenance || null,
+          idTransporteur: getters.getCurrentBR.Transporteur || null,
+          brute: getters.getCurrentBR.brute || null,
+          idLot: getters.getCurrentBR.idLot || null,
+          isNegos: getters.getCurrentBR.isNegos || null,
+          nbCaisse: getters.getCurrentBR.nombreDeCaisses || null,
+          nbPalette: getters.getCurrentBR.nombreDePalettes || null,
+          nbonPese: getters.getCurrentBR.numeroBonPese || null,
+          tare: getters.getCurrentBR.tare || null,
+          _0301DetailsReceptionMps: getters.getCurrentBR.DetailsBR,
+        };
+
+        Api.put(MAIN_END_POINT + getters.getCurrentBR.idBR, BR)
           .then((response) => {
             resolve(response);
           })
@@ -153,7 +171,7 @@ const BonReceptions = {
       });
     },
 
-    // Add BonReception
+    // Add Lot
     addLot: ({ commit }, payload) => {
       return new Promise((resolve, reject) => {
         Api.post(LOT_END_POINT, payload)
@@ -179,7 +197,39 @@ const BonReceptions = {
           });
       }
       else if (payload > 0){
-        console.log(payload);
+        return new Promise((resolve, reject) => {
+          Api.get(MAIN_END_POINT + payload)
+            .then((response) => {
+              console.log(response.data);
+              let BR = {
+                idBR : response.data.idBr || null,
+                numBonReception : response.data.codeBr || null,
+                Camion : response.data.idCamion || null,
+                Fournisseur : response.data.idFournisseur || null,
+                Origine : response.data.idOrigine || null,
+                Provenance : response.data.idProvenance || null,
+                Transporteur : response.data.idTransporteur || null,
+                brute : response.data.brute || null,
+                idLot : response.data.idLot || null,
+                // isNegos : response.data.isNegos || null,
+                nombreDeCaisses : response.data.nbCaisse || null,
+                nombreDePalettes : response.data.nbPalette || null,
+                numeroBonPese : response.data.nbonPese || null,
+                tare : response.data.tare || null,
+                dateBr : response.data.dateBr || null,
+                DetailsBR : response.data.articles || null
+              };
+
+              console.log(BR);
+              console.log("editing BR ==>  " + payload);
+
+              commit("setCurrentBR", BR);
+              resolve(response);
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        });
       }
     }
 

@@ -115,12 +115,12 @@ namespace Logico.Controllers
 
         // GET api/<BonReceptionsController>/5
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public ActionResult<Object> GetById(int id)
         {
             try
             {
-                var bonReceptions = _repository.BonReceptionMp.GetBonReceptionById(id);
-                if (bonReceptions is null)
+                var bonReception = _repository.BonReceptionMp.GetBonReceptionById(id);
+                if (bonReception is null)
                 {
                     _logger.LogError($"BonReception with id: {id}, hasn't been found in db.");
                     return NotFound();
@@ -129,7 +129,7 @@ namespace Logico.Controllers
                 {
                     _logger.LogInfo($"Returned BonReception with id: {id}");
 
-                    return Ok(bonReceptions);
+                    return bonReception;
                 }
             }
             catch (Exception ex)
@@ -196,7 +196,7 @@ namespace Logico.Controllers
                 _repository.BonReceptionMp.Update(bonReception);
                 _repository.Save();
 
-                return NoContent();
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -211,16 +211,18 @@ namespace Logico.Controllers
         {
             try
             {
-                var bonReception = _repository.BonReceptionMp.GetBonReceptionById(id);
+                var bonReception = (_0301BonReceptionMp)_repository.BonReceptionMp.GetByCondition(x=>x.IdBr == id);
                 if (bonReception == null)
                 {
                     _logger.LogError($"BonReception with id: {id}, hasn't been found in db.");
                     return NotFound();
                 }
-                _repository.BonReceptionMp.Delete(bonReception);
+                //_repository.BonReceptionMp.Delete(bonReception);
+                bonReception.Deleted = true;
+                _repository.BonReceptionMp.Update(bonReception);
                 _repository.Save();
 
-                return NoContent();
+                return Ok();
             }
             catch (Exception ex)
             {

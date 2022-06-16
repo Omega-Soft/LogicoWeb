@@ -14,7 +14,7 @@
                 icon="arrowleft"
                 type="default"
                 styling-mode="text"
-                @click="this.$router.go(-1)"
+                @click="dispose()"
                 style="
                   margin-bottom: 15px;
                   padding-right: 0px;
@@ -83,7 +83,7 @@
         />
         <DxItem
           :editor-options="{
-            value: getCurrentBR.idFournisseur,
+            vModelValue: getCurrentBR.idFournisseur,
             searchEnabled: true,
             items: getFournisseurs,
             displayExpr: 'raisonSociale',
@@ -96,7 +96,7 @@
         </DxItem>
         <DxItem
           :editor-options="{
-            value: getCurrentBR.idOrigine,
+            vModelValue: getCurrentBR.idOrigine,
             searchEnabled: true,
             items: getOrigines,
             displayExpr: 'designation',
@@ -109,7 +109,7 @@
         </DxItem>
         <DxItem
           :editor-options="{
-            value: getCurrentBR.idCamion,
+            vModelValue: getCurrentBR.idCamion,
             searchEnabled: true,
             items: getCamions,
             displayExpr: 'matricule',
@@ -122,7 +122,7 @@
         </DxItem>
         <DxItem
           :editor-options="{
-            value: getCurrentBR.idTransporteur,
+            vModelValue: getCurrentBR.idTransporteur,
             searchEnabled: true,
             items: getTransporteurs,
             displayExpr: 'raisonSociale',
@@ -135,7 +135,7 @@
         </DxItem>
         <DxItem
           :editor-options="{
-            value: getCurrentBR.idProvenance,
+            vModelValue: getCurrentBR.idProvenance,
             searchEnabled: true,
             items: getProvenances,
             displayExpr: 'designation',
@@ -337,6 +337,7 @@ export default {
       generateCodeLot: "bonReception/generateCodeLot",
       addLot: "bonReception/addLot",
       addBonReception: "bonReception/addBonReception",
+      updateBonReception: "bonReception/updateBonReception",
       initLots: "bonReception/initLots",
       initCamions: "camion/initCamions",
       initFournisseurs: "fournisseur/initFournisseurs",
@@ -363,16 +364,21 @@ export default {
               this.$router.go(-1);
             })
             .catch(() => {
-              notify("Echec..!!", "error", 1500);
+              notify("Echec d'ajout..!!", "error", 1500);
             });
         } else if (this.action == "Modifier" && this.id > 0) {
-          this.$store.dispatch("bonReception/updateBonReception", this.id);
-          notify(
-            "Le bon réception a etes modifié avec success...!!",
-            "success",
-            2000
-          );
-          this.$router.go(-1);
+          await this.updateBonReception()
+            .then(() => {
+              notify(
+                "Le bon réception a etes modifié avec success...!!",
+                "success",
+                2000
+              );
+              this.dispose();
+            })
+            .catch(() => {
+              notify("Echec de modification..!!", "error", 1500);
+            });
         }
       } else {
         notify(this.dataValidation(), "error", 2000);
@@ -428,7 +434,6 @@ export default {
     },
 
     initData: async function(){
-      await this.prepareCurrentBR(this.id);
       await this.initLots();
       await this.initCamions();
       await this.initFournisseurs();
@@ -438,6 +443,12 @@ export default {
       await this.initArticles();
       await this.initMoules();
       await this.initQualites();
+      await this.prepareCurrentBR(this.id);
+    },
+
+    dispose(){
+      this.$router.go(-1);
+      this.getCurrentBR = {};
     }
   },
 };
