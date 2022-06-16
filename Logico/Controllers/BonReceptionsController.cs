@@ -29,14 +29,14 @@ namespace Logico.Controllers
 
             try
             {
-                var lot = _repository.BonReceptionMp.GetAll().Where(x => x.CodeBr.StartsWith("BR")).ToList().LastOrDefault();
-                if (lot is null)
+                var br = _repository.BonReceptionMp.GetAll().Where(x => x.CodeBr.StartsWith("BR")).ToList().LastOrDefault();
+                if (br is null)
                 {
                     num = "0001";
                 }
                 else
                 {
-                    var n = (int.Parse(lot.CodeBr.Substring(3, 4)) + 1);
+                    var n = (int.Parse(br.CodeBr.Substring(3, 4)) + 1);
                     if (n > 0 && n < 10) num = "000" + n;
                     else if (n > 9 && n < 100) num = "00" + n;
                     else if (n > 99 && n < 1000) num = "0" + n;
@@ -115,12 +115,12 @@ namespace Logico.Controllers
 
         // GET api/<BonReceptionsController>/5
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public ActionResult<Object> GetById(int id)
         {
             try
             {
-                var bonReceptions = _repository.BonReceptionMp.GetBonReceptionById(id);
-                if (bonReceptions is null)
+                var bonReception = _repository.BonReceptionMp.GetBonReceptionById(id);
+                if (bonReception is null)
                 {
                     _logger.LogError($"BonReception with id: {id}, hasn't been found in db.");
                     return NotFound();
@@ -129,7 +129,7 @@ namespace Logico.Controllers
                 {
                     _logger.LogInfo($"Returned BonReception with id: {id}");
 
-                    return Ok(bonReceptions);
+                    return bonReception;
                 }
             }
             catch (Exception ex)
@@ -160,7 +160,7 @@ namespace Logico.Controllers
                 _repository.BonReceptionMp.Create(bonReception);
                 _repository.Save();
 
-                return Ok(bonReception);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -196,7 +196,7 @@ namespace Logico.Controllers
                 _repository.BonReceptionMp.Update(bonReception);
                 _repository.Save();
 
-                return NoContent();
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -211,16 +211,18 @@ namespace Logico.Controllers
         {
             try
             {
-                var bonReception = _repository.BonReceptionMp.GetBonReceptionById(id);
+                var bonReception = (_0301BonReceptionMp)_repository.BonReceptionMp.GetByCondition(x=>x.IdBr == id);
                 if (bonReception == null)
                 {
                     _logger.LogError($"BonReception with id: {id}, hasn't been found in db.");
                     return NotFound();
                 }
-                _repository.BonReceptionMp.Delete(bonReception);
+                //_repository.BonReceptionMp.Delete(bonReception);
+                bonReception.Deleted = true;
+                _repository.BonReceptionMp.Update(bonReception);
                 _repository.Save();
 
-                return NoContent();
+                return Ok();
             }
             catch (Exception ex)
             {
