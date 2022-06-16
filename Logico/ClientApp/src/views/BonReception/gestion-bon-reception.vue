@@ -1,7 +1,13 @@
 <template>
-    <form id="form-container" class="content-block">
-      <DxForm id="form" :col-count="3">
-        <DxItem :col-span="2">
+  <div>
+    <form
+      id="form-container"
+      class="content-block"
+      @submit.prevent="SubmitBR()"
+    >
+      <DxForm :form-data="getCurrentBR" id="form" :col-count="4">
+        <!-- Header -->
+        <DxItem :col-span="3">
           <template #default>
             <div>
               <DxButton
@@ -26,125 +32,135 @@
           :button-options="buttonOptions"
           horizontal-alignment="right"
         />
-      </DxForm>
-    </form>
-
-
-<div class="center">
-  <div class="dx-field">
-          <DxTextBox
-            label="Code Lot MP"
-            label-mode="floating"
-            width="200"
-            v-model:value="codeLot"
-            :read-only="!insertMode"
-          />
-          <div class="margin"></div>
-
-        <DxDateBox
-        label="Date Lot MP"
-        width="200"
-        display-expr="journee"
-        label-mode="floating"
-        value-expr="idLot"
-        v-model:value="dateLot"
-        type="date"
-        :read-only="!insertMode"
-      />
-      </div>
-</div>
-      
-
-    
-   
-  <div>
-    <form
-      id="form-container"
-      class="content-block"
-      @submit.prevent="customBR()"
-    >
-      <DxForm :form-data="getCurrentBR" id="form" :col-count="4">
+        <!-- ---------------- Lot --------------------------  -->
+        <DxItem :col-span="1">
+          <template #default>
+            <DxSelectBox
+              label="Code Lot MP"
+              label-mode="floating"
+              :data-source="getLots"
+              display-expr="codeLot"
+              value-expr="idLot"
+              @value-changed="onSelectLot"
+              :visible="!insertMode"
+              v-model:value="getCurrentBR.idLot"
+            >
+              <DxRequiredRule message="Fournisseur est obligatoire" />
+            </DxSelectBox>
+            <DxTextBox
+              label="Code Lot MP"
+              label-mode="floating"
+              v-model:value="codeLot"
+              :visible="insertMode"
+            />
+          </template>
+        </DxItem>
+        <DxItem :col-span="1">
+          <template #default>
+            <DxDateBox
+              label="Date Lot MP"
+              display-expr="journee"
+              label-mode="floating"
+              value-expr="idLot"
+              v-model:value="dateLot"
+              type="date"
+              :read-only="!insertMode"
+              @value-changed="onChangeDate"
+            />
+          </template>
+        </DxItem>
+        <DxItem :col-span="2">
+          <template #default>
+            <DxButton v-if="!insertMode && action == 'Ajouter'" icon="plus" @click="btnAddLotClick()" style="background-color:transparent; margin-top:5px;margin-left:-30px"/>
+            <DxButton v-if="insertMode" icon="save" @click="btnSaveLotClick()" style="background-color:transparent; margin-top:5px;margin-left:-30px"/>
+            <DxButton v-if="insertMode" icon="close" @click="btnCancelLotClick()" style="background-color:transparent; margin-top:5px"/>
+          </template>
+        </DxItem>
+        <!-- ----------------- BR ------------------------- -->
         <DxItem
-          :editor-options="{ value: agenerateCodeBR, disabled: true }"
-          data-field="acodeBr"
+          :editor-options="{ value: getCurrentBR.numBonReception, readOnly: true }"
+          data-field="numBonReception"
         />
         <DxItem
           :editor-options="{
-            value: getCurrentBR.BR.idFournisseur,
+            value: getCurrentBR.idFournisseur,
             searchEnabled: true,
-            items: get,
+            items: getFournisseurs,
             displayExpr: 'raisonSociale',
             valueExpr: 'idFournisseur',
           }"
-          data-field="idFournisseur"
+          data-field="Fournisseur"
           editor-type="dxSelectBox"
         >
           <DxRequiredRule message="Fournisseur est obligatoire" />
         </DxItem>
-
         <DxItem
           :editor-options="{
-            value: getCurrentBR.BR.idOrigine,
+            value: getCurrentBR.idOrigine,
             searchEnabled: true,
-            items: get,
+            items: getOrigines,
             displayExpr: 'designation',
             valueExpr: 'idOrigine',
           }"
-          data-field="idOrigine"
+          data-field="Origine"
           editor-type="dxSelectBox"
         >
           <DxRequiredRule message="L'origine est obligatoire" />
         </DxItem>
-
         <DxItem
           :editor-options="{
-            value: getCurrentBR.BR.idCamion,
+            value: getCurrentBR.idCamion,
             searchEnabled: true,
-            items: get,
+            items: getCamions,
             displayExpr: 'matricule',
             valueExpr: 'idCamion',
           }"
-          data-field="idCamion"
+          data-field="Camion"
           editor-type="dxSelectBox"
         >
           <DxRequiredRule message="Camion est obligatoire" />
         </DxItem>
         <DxItem
           :editor-options="{
-            value: getCurrentBR.BR.idTransporteur,
+            value: getCurrentBR.idTransporteur,
             searchEnabled: true,
-            items: get,
+            items: getTransporteurs,
             displayExpr: 'raisonSociale',
             valueExpr: 'idTransporteur',
           }"
-          data-field="idTransporteur"
+          data-field="Transporteur"
           editor-type="dxSelectBox"
         >
           <DxRequiredRule message="Transporteur est obligatoire" />
         </DxItem>
-
         <DxItem
           :editor-options="{
-            value: getCurrentBR.BR.idProvenance,
+            value: getCurrentBR.idProvenance,
             searchEnabled: true,
-            items: get,
+            items: getProvenances,
             displayExpr: 'designation',
             valueExpr: 'idProvenance',
           }"
-          data-field="idProvenance"
+          data-field="Provenance"
           editor-type="dxSelectBox"
         >
           <DxRequiredRule message="Provenance est obligatoire" />
         </DxItem>
-        <DxItem data-field="tare" />
         <DxItem data-field="brute" />
-        <DxItem data-field="nbPalette" />
-        <DxItem data-field="nbCaisse" />
-        <DxItem data-field="numBonPese" />
-        <DxItem data-field="isNegos" />
+        <DxItem data-field="tare" />
+        <DxItem data-field="nombreDePalettes" />
+        <DxItem data-field="nombreDeCaisses" />
+        <DxItem data-field="numeroBonPese" />
+        <DxItem 
+          data-field="isNegos"
+          editor-type="dxCheckBox"
+          :editor-options="{
+            value: getCurrentBR.isNegos,
+          }"
+        />
       </DxForm>
     </form>
-
+    <!-- ----------------- Details BR ------------------------- -->
     <DxDataGrid
       class="content-block"
       id="grid-container"
@@ -175,7 +191,7 @@
         :editor-options="{
           value: '',
           searchEnabled: true,
-          items: getArticle,
+          items: getArticles,
           displayExpr: 'designation',
           valueExpr: 'idArticle',
         }"
@@ -189,7 +205,7 @@
         :editor-options="{
           value: '',
           searchEnabled: true,
-          items: getMoule,
+          items: getMoules,
           displayExpr: 'designation',
           valueExpr: 'idMoule',
         }"
@@ -204,7 +220,7 @@
         :editor-options="{
           value: '',
           searchEnabled: true,
-          items: getQualite,
+          items: getQualites,
           displayExpr: 'designation',
           valueExpr: 'idQualite',
         }"
@@ -239,16 +255,12 @@
         data-field="eventre"
         caption="Eventré(%)"
         editor-type="dxNumberBox"
-      >
-        <DxRequiredRule message="L'eventré  est obligatoire" />
-      </DxColumn>
+      />
       <DxColumn
         data-field="histamine"
         caption="Histamine(%)"
         editor-type="dxNumberBox"
-      >
-        <DxRequiredRule message="L'Histamine  est obligatoire" />
-      </DxColumn>
+      />
     </DxDataGrid>
   </div>
 </template>
@@ -296,16 +308,21 @@ export default {
         stylingMode: "text",
         useSubmitBehavior: true,
       },
+      insertMode: false,
+      codeLot: null,
+      dateLot: null,
     };
   },
-  mounted: async function () {},
+  mounted: async function () {
+    await this.initData();
+  },
   computed: {
     ...mapGetters({
       getCurrentBR: "bonReception/getCurrentBR",
-      getTransporteur: "transporteur/getTransporteurs",
-      getArticle: "article/getArticles",
-      getMoule: "moule/getMoules",
-      getQualite: "qualite/getQualites",
+      getTransporteurs: "transporteur/getTransporteurs",
+      getArticles: "article/getArticles",
+      getMoules: "moule/getMoules",
+      getQualites: "qualite/getQualites",
       getLots: "bonReception/getLots",
       getCamions: "camion/getCamions",
       getFournisseurs: "fournisseur/getFournisseurs",
@@ -316,16 +333,31 @@ export default {
   methods: {
     ...mapActions({
       generateCodeBR: "bonReception/generateCodeBR",
+      prepareCurrentBR: "bonReception/prepareCurrentBR",
+      generateCodeLot: "bonReception/generateCodeLot",
+      addLot: "bonReception/addLot",
+      addBonReception: "bonReception/addBonReception",
+      initLots: "bonReception/initLots",
+      initCamions: "camion/initCamions",
+      initFournisseurs: "fournisseur/initFournisseurs",
+      initTransporteurs: "transporteur/initTransporteurs",
+      initOrigines: "origine/initOrigines",
+      initProvenances: "provenance/initProvenances",
+      initArticles: "article/initArticles",
+      initMoules: "moule/initMoules",
+      initQualites: "qualite/initQualites",
     }),
+    
     dataValidation() {
-      if (this.getDetailsBR.length < 1) {
+      if (this.getCurrentBR.DetailsBR.length < 1) {
         return "Le Bon Réception doit contenir au moins un article...!!?";
       } else return true;
     },
-    customBR: function () {
+    
+    SubmitBR: async function () {
       if (this.dataValidation() === true) {
         if (this.action == "Ajouter") {
-          this.addBR()
+          await this.addBonReception()
             .then(() => {
               notify("Le Bon de réception est enegistrer", "success", 2000);
               this.$router.go(-1);
@@ -346,23 +378,89 @@ export default {
         notify(this.dataValidation(), "error", 2000);
       }
     },
-    beforeMount() {},
-    beforeUnmount() {},
+    
+    getdate: function () {
+      return this.dateLot;
+    },
+    onSelectLot: function (e) {
+      let lots = Array.from(
+        this.getLots.map((x) => {
+          return {
+            idLot: x.idLot,
+            codeLot: x.codeLot,
+            journee: x.journee,
+          };
+        })
+      );
+      this.dateLot = lots.find((x) => x.idLot == e.value).journee;
+    },
+    btnAddLotClick: function(){
+      this.insertMode = true;
+      this.codeLot = null;
+      this.dateLot = null;
+      this.selectedLot = 0;
+    },
+    btnSaveLotClick: async function(){
+      this.insertMode = false;
+      await this.addLot({codeLot: this.codeLot, journee: new Date(this.dateLot)})
+      .then((response) => {
+        this.initLots().then(() => {
+          this.selectedLot = response.data.idLot;
+          this.getCurrentBR.idLot = response.data.idLot;
+        })
+      })
+    },
+    btnCancelLotClick: function(){
+      this.insertMode = false;
+      this.codeLot = null;
+      this.dateLot = null;
+      this.selectedLot = -1;
+    },
+
+    onChangeDate: function(){
+      if (this.insertMode && this.dateLot != null) {
+        let date = this.dateLot.toISOString();
+        this.generateCodeLot(date.toString().substring(0, 10))
+        .then((response) => {
+            this.codeLot = response;
+        });
+      }
+    },
+
+    initData: async function(){
+      await this.prepareCurrentBR(this.id);
+      await this.initLots();
+      await this.initCamions();
+      await this.initFournisseurs();
+      await this.initTransporteurs();
+      await this.initOrigines();
+      await this.initProvenances();
+      await this.initArticles();
+      await this.initMoules();
+      await this.initQualites();
+    }
   },
 };
 </script>
 
+
+<style>
+.dx-checkbox .dx-checkbox-container{
+  margin: 15px !important;
+  margin-left: 30px !important
+}
+</style>
 <style scoped>
 .espace {
   margin-top: 25px;
 }
-.margin{
+.margin {
   margin-right: 40px;
   margin-left: 40px;
 }
-.center{
- display: grid;
-    place-items: center; 
+.center {
+  display: grid;
+  place-items: center;
 }
 
 .prt {

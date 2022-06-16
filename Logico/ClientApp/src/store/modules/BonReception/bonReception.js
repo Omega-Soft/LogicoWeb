@@ -83,11 +83,32 @@ const BonReceptions = {
     // Add BonReception
     addBonReception: ({ getters }) => {
       return new Promise((resolve, reject) => {
-        Api.post(MAIN_END_POINT, getters.getCurrentBR)
+    
+        let BR = {
+          codeBr: getters.getCurrentBR.numBonReception || null,
+          idCamion: getters.getCurrentBR.Camion || null,
+          idFournisseur: getters.getCurrentBR.Fournisseur || null,
+          idOrigine: getters.getCurrentBR.Origine || null,
+          idProvenance: getters.getCurrentBR.Provenance || null,
+          idTransporteur: getters.getCurrentBR.Transporteur || null,
+          brute: getters.getCurrentBR.brute || null,
+          idLot: getters.getCurrentBR.idLot || null,
+          isNegos: getters.getCurrentBR.isNegos || null,
+          nbCaisse: getters.getCurrentBR.nombreDeCaisses || null,
+          nbPalette: getters.getCurrentBR.nombreDePalettes || null,
+          nbonPese: getters.getCurrentBR.numeroBonPese || null,
+          tare: getters.getCurrentBR.tare || null,
+          dateBr: new Date(),
+          _0301DetailsReceptionMps: getters.getCurrentBR.DetailsBR,
+        };
+        
+        Api.post(MAIN_END_POINT, BR)
           .then((response) => {
+            console.log("Store => Added...!!!");
             resolve(response);
           })
           .catch((error) => {
+            console.log("Store => Catch...!!!");
             reject(error);
           });
       });
@@ -144,6 +165,24 @@ const BonReceptions = {
           });
       });
     },
+
+    // Prepare CurrentBR for Add/Edit
+    prepareCurrentBR: ({ commit,dispatch }, payload) => {
+      if (payload === "nouveau"){
+        dispatch('generateCodeBR')
+          .then((response) => {
+            let BR = {
+              numBonReception: response,
+              DetailsBR:[]
+            }
+            commit("setCurrentBR", BR);
+          });
+      }
+      else if (payload > 0){
+        console.log(payload);
+      }
+    }
+
   },
 };
 export default BonReceptions;

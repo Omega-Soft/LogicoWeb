@@ -29,14 +29,14 @@ namespace Logico.Controllers
 
             try
             {
-                var lot = _repository.BonReceptionMp.GetAll().Where(x => x.CodeBr.StartsWith("BR")).ToList().LastOrDefault();
-                if (lot is null)
+                var br = _repository.BonReceptionMp.GetAll().Where(x => x.CodeBr.StartsWith("BR")).ToList().LastOrDefault();
+                if (br is null)
                 {
                     num = "0001";
                 }
                 else
                 {
-                    var n = (int.Parse(lot.CodeBr.Substring(3, 4)) + 1);
+                    var n = (int.Parse(br.CodeBr.Substring(3, 4)) + 1);
                     if (n > 0 && n < 10) num = "000" + n;
                     else if (n > 9 && n < 100) num = "00" + n;
                     else if (n > 99 && n < 1000) num = "0" + n;
@@ -160,7 +160,7 @@ namespace Logico.Controllers
                 _repository.BonReceptionMp.Create(bonReception);
                 _repository.Save();
 
-                return Ok(bonReception);
+                return Ok();
             }
             catch (Exception ex)
             {
