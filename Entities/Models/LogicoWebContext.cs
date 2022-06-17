@@ -39,7 +39,7 @@ namespace Entities.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=192.168.100.160;Database=LogicoWeb;User ID=sa;Password=Omega@@123");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-CNCGGML\\SOUKAINA_SERVER;Database=LogicoWeb;Trusted_Connection=True;");
             }
         }
 
@@ -310,8 +310,7 @@ namespace Entities.Models
 
                 entity.Property(e => e.NbonPese)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("NBonPese");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Prevalidee).HasColumnName("prevalidee");
 
@@ -384,10 +383,6 @@ namespace Entities.Models
                 entity.Property(e => e.IdMoule).HasColumnName("idMoule");
 
                 entity.Property(e => e.IdQualite).HasColumnName("idQualite");
-
-                entity.Property(e => e.MntAchat).HasColumnName("mntAchat");
-
-                entity.Property(e => e.Pu).HasColumnName("PU");
 
                 entity.Property(e => e.QtePayee).HasColumnName("qtePayee");
 
@@ -479,15 +474,6 @@ namespace Entities.Models
                     .IsUnicode(false)
                     .HasColumnName("codeFournisseur");
 
-                entity.Property(e => e.CodePostal)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("codePostal");
-
-                entity.Property(e => e.DateAnouveau)
-                    .HasColumnType("date")
-                    .HasColumnName("dateAnouveau");
-
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
                     .IsUnicode(false)
@@ -498,31 +484,15 @@ namespace Entities.Models
                     .IsUnicode(false)
                     .HasColumnName("fax");
 
-                entity.Property(e => e.IsFrsCharges).HasColumnName("isFrsCharges");
-
-                entity.Property(e => e.IsFrsMp).HasColumnName("isFrsMP");
-
-                entity.Property(e => e.IsFrsPf).HasColumnName("isFrsPF");
-
                 entity.Property(e => e.RaisonSociale)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("raisonSociale");
 
-                entity.Property(e => e.Site)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("site");
-
                 entity.Property(e => e.Tel)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("tel");
-
-                entity.Property(e => e.Ville)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("ville");
             });
 
             modelBuilder.Entity<_0600Moule>(entity =>

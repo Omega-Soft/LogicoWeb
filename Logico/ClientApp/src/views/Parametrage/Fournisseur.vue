@@ -20,7 +20,7 @@
       @selection-changed="selectedChanged"
     >
       <DxLoadPanel :enabled="true" />
-      <DxPaging :page-size="10" />
+      <DxPaging :page-size="5" />
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
       <DxEditing
@@ -29,50 +29,9 @@
         :allow-adding="userRoles.add"
         refresh-mode="reshape"
         mode="popup"
-      >
-        <!-- <DxPopup
-          :show-title="true"
-          title="Fournisseur Info"
-        />
-          <DxForm>
-          <DxItem
-            :col-count="3"
-            :col-span="2"
-            item-type="group"
-          > -->
-        <DxColumn caption="Code Fournisseur" data-field="codeFournisseur">
-          <DxRequiredRule />
-        </DxColumn>
-
-        <DxColumn caption="Raison Sociale" data-field="raisonSociale">
-          <DxRequiredRule />
-        </DxColumn>
-
-        <DxColumn caption="Email" data-field="email">
-          <DxRequiredRule />
-          <DxEmailRule />
-        </DxColumn>
-
-        <!-- <DxItem
-              :col-span="2"
-              :editor-options="{ height: 100 }"
-              data-field="Notes"
-              editor-type="dxTextArea"
-            />
-          </DxItem> -->
-        <!-- 
-          <DxItem
-            :col-count="2"
-            :col-span="2"
-            item-type="group"
-            caption="Home Address"
-          > -->
-        <DxColumn caption="Adresse" data-field="adresse"> </DxColumn>
-
-        <DxColumn caption="Téléphone" data-field="tel"> </DxColumn>
-        <!-- </DxItem>
-        </DxForm>-->
-      </DxEditing>
+      />
+      
+        
       <DxSpeedDialAction
         :index="1"
         :visible="Array.from(getFournisseurs).length > 0"

@@ -12,7 +12,7 @@ namespace Repository
 
         public IEnumerable<Object> GetAllFournisseurs()
         {
-            return GetAll().ToList();
+            return GetAll().ToList(); 
         }
             public _0400Fournisseur GetFournisseurById(int Id)
             {

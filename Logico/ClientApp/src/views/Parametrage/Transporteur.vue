@@ -20,7 +20,7 @@
       @selection-changed="selectedChanged"
     >
       <DxLoadPanel :enabled="true" />
-      <DxPaging :page-size="10" />
+      <DxPaging :page-size="5" />
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
       <DxEditing
@@ -39,7 +39,7 @@
         label=""
       />
 
-      <DxColumn caption="Code Transporteurs" data-field="code">
+      <DxColumn caption="Code Transporteurs" data-field="codeTransporteur">
         <DxRequiredRule />
       </DxColumn>
 

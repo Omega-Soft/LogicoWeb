@@ -16,14 +16,7 @@ namespace Entities.Models
         public string? Email { get; set; }
         public string? Adresse { get; set; }
         public string? Tel { get; set; }
-        public DateTime? DateAnouveau { get; set; }
         public string? Fax { get; set; }
-        public string? Site { get; set; }
-        public string? CodePostal { get; set; }
-        public string? Ville { get; set; }
-        public bool? IsFrsMp { get; set; }
-        public bool? IsFrsPf { get; set; }
-        public bool? IsFrsCharges { get; set; }
 
         public virtual ICollection<_0301BonReceptionMp> _0301BonReceptionMps { get; set; }
     }

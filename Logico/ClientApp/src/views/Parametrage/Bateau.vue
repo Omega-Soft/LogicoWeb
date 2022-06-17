@@ -20,7 +20,7 @@
       @selection-changed="selectedChanged"
     >
       <DxLoadPanel :enabled="true" />
-      <DxPaging :page-size="10" />
+      <DxPaging :page-size="5" />
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
       <DxEditing
@@ -46,10 +46,16 @@
         <DxRequiredRule />
       </DxColumn>
 
-      <DxColumn caption="Type Bateau" data-field="type">
-        <DxRequiredRule />
+       
+     <DxColumn caption="Type Bateau" data-field="idOrigine">
+        <DxLookup
+          :data-source="getOrigines"
+          display-expr="designation"
+          value-expr="idOrigine"
+        />
       </DxColumn>
     </DxDataGrid>
+    
   </div>
 </template>
 <script>
@@ -94,11 +100,13 @@ export default {
 
   mounted: async function () {
     await this.initBateaux();
+      await this.initOrigines();
   },
 
   computed: {
     ...mapGetters({
       getBateaux: "bateau/getBateaux",
+       getOrigines: "origine/getOrigines",
       getUserPages: "login/getUserPages",
     }),
     userRoles() {
@@ -115,6 +123,7 @@ export default {
       addBateau: "bateau/addBateau",
       updateBateau: "bateau/updateBateau",
       deleteBateau: "bateau/deleteBateau",
+       initOrigines: "origine/initOrigines",
     }),
     saveGridInstance: function (e) {
       this.dataGridInstance = e.component;
