@@ -1,4 +1,15 @@
 <template>
+
+  <DxLoadPanel
+    :position="{ of: '#form' }"
+    v-model:visible="loading"
+    :show-indicator="true"
+    :show-pane="true"
+    :shading="true"
+    :close-on-outside-click="false"
+    shading-color="rgba(242,242,242,0.75)"
+  />
+
   <div>
     <form
       id="form-container"
@@ -44,8 +55,8 @@
               @value-changed="onSelectLot"
               :visible="!insertMode"
               v-model:value="getCurrentBR.idLot"
+              :read-only="readOnlyLot"
             >
-              <DxRequiredRule message="Fournisseur est obligatoire" />
             </DxSelectBox>
             <DxTextBox
               label="Code Lot MP"
@@ -71,7 +82,7 @@
         </DxItem>
         <DxItem :col-span="2">
           <template #default>
-            <DxButton v-if="!insertMode && action == 'Ajouter'" icon="plus" @click="btnAddLotClick()" style="background-color:transparent; margin-top:5px;margin-left:-30px"/>
+            <DxButton v-if="!insertMode && !readOnlyLot" icon="plus" @click="btnAddLotClick()" style="background-color:transparent; margin-top:5px;margin-left:-30px"/>
             <DxButton v-if="insertMode" icon="save" @click="btnSaveLotClick()" style="background-color:transparent; margin-top:5px;margin-left:-30px"/>
             <DxButton v-if="insertMode" icon="close" @click="btnCancelLotClick()" style="background-color:transparent; margin-top:5px"/>
           </template>
@@ -280,6 +291,7 @@ import { DxBox } from "devextreme-vue/box";
 import DxTextBox from "devextreme-vue/text-box";
 import DxDateBox from "devextreme-vue/date-box";
 import notify from "devextreme/ui/notify";
+import { DxLoadPanel } from 'devextreme-vue/load-panel';
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -297,6 +309,7 @@ export default {
     DxDataGrid,
     DxEditing,
     DxColumn,
+    DxLoadPanel
   },
   data() {
     return {
@@ -311,10 +324,14 @@ export default {
       insertMode: false,
       codeLot: null,
       dateLot: null,
+      readOnlyLot: false,
+      loading: false,
     };
   },
   mounted: async function () {
+    this.loading = true;
     await this.initData();
+    this.loading = false;
   },
   computed: {
     ...mapGetters({
@@ -352,7 +369,11 @@ export default {
     dataValidation() {
       if (this.getCurrentBR.DetailsBR.length < 1) {
         return "Le Bon Réception doit contenir au moins un article...!!?";
-      } else return true;
+      }
+      else if (this.getCurrentBR.idLot == null || this.getCurrentBR.idLot < 1){
+        return "Le Lot est obligatoire...!!?";
+      } 
+      else return true;
     },
     
     SubmitBR: async function () {
@@ -444,6 +465,9 @@ export default {
       await this.initMoules();
       await this.initQualites();
       await this.prepareCurrentBR(this.id);
+      if (this.id != "nouveau"){
+        this.readOnlyLot = true;
+      }
     },
 
     dispose(){

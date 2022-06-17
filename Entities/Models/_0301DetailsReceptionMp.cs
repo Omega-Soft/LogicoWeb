@@ -6,7 +6,6 @@ namespace Entities.Models
     public partial class _0301DetailsReceptionMp
     {
         public int IdDetailsBr { get; set; }
-        public string? CodeDetailsBr { get; set; }
         public float? QteRecue { get; set; }
         public float? QtePayee { get; set; }
         public float? Pu { get; set; }

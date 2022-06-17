@@ -363,15 +363,7 @@ namespace Entities.Models
 
                 entity.ToTable("0301_DetailsReceptionMP");
 
-                entity.HasIndex(e => e.CodeDetailsBr, "IX_0301_DetailsReceptionMP")
-                    .IsUnique();
-
                 entity.Property(e => e.IdDetailsBr).HasColumnName("idDetailsBR");
-
-                entity.Property(e => e.CodeDetailsBr)
-                    .HasMaxLength(20)
-                    .IsUnicode(false)
-                    .HasColumnName("codeDetailsBR");
 
                 entity.Property(e => e.Eventre).HasColumnName("eventre");
 

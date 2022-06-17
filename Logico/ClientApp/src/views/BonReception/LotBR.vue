@@ -223,6 +223,7 @@ export default {
       initBonReceptionLot: "bonReception/initBonReceptionLot",
       initLots: "bonReception/initLots",
       generateCodeLot: "bonReception/generateCodeLot",
+      deleteBonReception: "bonReception/deleteBonReception",
       addLot: "bonReception/addLot",
       initCamions: "camion/initCamions",
       initFournisseurs: "fournisseur/initFournisseurs",
@@ -233,7 +234,7 @@ export default {
     addBR: function () {
       this.$router.push({
         name: "gestion-bon-reception",
-        params: { action: "Ajouter", id: "new" },
+        params: { action: "Ajouter", id: "lot"+this.selectedLot },
       });
     },
     updateBR: function () {
@@ -243,16 +244,17 @@ export default {
       });
     },
     deleteBR: function () {
-      console.log("Deleting..." + this.selectedRowIndex);
-      this.grid.deleteRow(2);
+      this.grid.deleteRow(this.selectedRowIndex);
     },
-    onDeleteBR: function () {
-      console.log("Deleting..." + this.selectedRowId);
-      this.$store.dispatch(
-        "bonReception/deleteBonReception",
-        this.selectedRowId
-      );
-      this.grid.Reload();
+    onDeleteBR: async function () {
+      await this.deleteBonReception(this.selectedRowId)
+        .then((response) => {
+          notify("Le bon reception a bien été supprimé!", "success", 2000);
+        })
+        .catch((error) => {
+          console.log(error);
+          notify("Echec de suppression!", "error", 2000);
+        });
     },
     getdate: function () {
       return this.dateLot;
