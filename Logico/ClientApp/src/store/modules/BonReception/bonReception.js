@@ -231,6 +231,17 @@ const BonReceptions = {
             });
         });
       }
+      else if (payload.includes("lot")){
+        dispatch('generateCodeBR')
+          .then((response) => {
+            let BR = {
+              numBonReception: response,
+              idLot: parseInt(payload.substring(3)),
+              DetailsBR:[]
+            }
+            commit("setCurrentBR", BR);
+          }).catch((error)=> console.log(error));
+      }
     }
 
   },

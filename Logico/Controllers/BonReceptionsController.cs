@@ -211,7 +211,7 @@ namespace Logico.Controllers
         {
             try
             {
-                var bonReception = (_0301BonReceptionMp)_repository.BonReceptionMp.GetByCondition(x=>x.IdBr == id);
+                var bonReception = _repository.BonReceptionMp.GetByCondition(x=>x.IdBr == id).FirstOrDefault();
                 if (bonReception == null)
                 {
                     _logger.LogError($"BonReception with id: {id}, hasn't been found in db.");
