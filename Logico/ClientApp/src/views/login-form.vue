@@ -88,7 +88,7 @@ export default {
       //  this.loading = true;
       this.loginAction(this.formData)
         .then(() => {
-          this.$router.push("/home");
+          this.$router.push("/dashboard");
         })
         .catch(() => {
           this.loading = false;

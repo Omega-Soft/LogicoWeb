@@ -7,13 +7,13 @@ function loadView(view) {
 export default [
 // Dashboard ----------------------------------------------------------------------
   {
-    path: "/home",
+    path: "/dashboard",
     name: "home",
     meta: {
       requiresAuth: true,
       layout: defaultLayout,
     },
-    component: loadView("home"),
+    component: loadView("dashboard"),
   },
 
 // Administration ----------------------------------------------------------------
@@ -155,6 +155,26 @@ export default [
       layout: defaultLayout
     },
     component: loadView("BonReception/gestion-bon-reception")
+  },
+
+// Facturation ------------------------------------------------------------------------------------
+  {
+    name: "facturation",
+    path: "/facturation",
+    meta: {
+      requiresAuth: true,
+      layout: defaultLayout,
+    },
+    component: loadView("Facturation/ListFactures"),
+  },
+  {
+    name: "gestion-factures",
+    path: "/facturation/:action/:id",
+    meta: { 
+      requiresAuth: true,
+      layout: defaultLayout
+    },
+    component: loadView("Facturation/gestion-factures")
   },
 
 // Test ------------------------------------------------------------------------------------------------

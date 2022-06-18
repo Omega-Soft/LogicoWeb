@@ -1,8 +1,8 @@
 export default [
   {
     name: "DSB",
-    text: "Home",
-    path: "/home",
+    text: "Dashboard",
+    path: "/dashboard",
     icon: "home",
   },
 
@@ -92,6 +92,13 @@ export default [
         path: "/lot-receptions"
       },
     ],
+  },
+
+  {
+    name: "FCTR",
+    text: "Facturation",
+    icon: "money",
+    path: "/facturation"
   },
   
   {

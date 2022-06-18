@@ -37,16 +37,15 @@ namespace Repository
                     x.Validee,
                     Articles = x._0301DetailsReceptionMps.Select(y => new
                     {
-                        y.IdDetailsBr,
-                        y.IdArticle,
-                        y.IdMoule,
-                        y.IdQualite,
+                        Article = y.IdArticleNavigation.Designation,
+                        Moule = y.IdMouleNavigation.Designation,
+                        Qualite = y.IdQualiteNavigation.Designation,
                         y.QteRecue,
                         y.QtePayee,
                         PrixUnitaire = y.Pu,
+                        MontantAchat = y.QtePayee * y.Pu,
                         y.Eventre,
                         y.Histamine,
-                        MontantAchat = y.MntAchat
                     }),
                 })
                 .ToList();
