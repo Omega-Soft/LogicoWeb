@@ -255,7 +255,7 @@
         <DxRequiredRule message="La quantité payée est obligatoire" />
       </DxColumn>
       <DxColumn
-        data-field="prixUnitaire"
+        data-field="pu"
         caption="Prix Unitaire"
         editor-type="dxNumberBox"
         :editor-options="{ min: '1' }"

@@ -18,10 +18,10 @@ router.beforeEach((to, from, next) => {
     ADMIN: "administration",
     PRMT: "parametrage",
     RCMP: "reception",
-    TKT: "ticket",
+    FCTR: "facturation",
   };
   let names = pages.map((p) => {
-    return p.page.replace(/ADMIN|PRMT|RCMP|TKT/gi, function (matched) {
+    return p.page.replace(/ADMIN|PRMT|RCMP|FCTR/gi, function (matched) {
       return mapObj[matched];
     });
   });

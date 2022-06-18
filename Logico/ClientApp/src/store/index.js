@@ -17,6 +17,7 @@ import ticket from "./modules/Test/ticket"
 import priority from "./modules/Test/priority"
 import status from "./modules/Test/status"
 import bonReception from "./modules/BonReception/bonReception"
+import facture from "./modules/Facturation/facture"
 
 export const store = createStore({
   modules: {
@@ -37,6 +38,7 @@ export const store = createStore({
     ticket,
     priority,
     status,
-    bonReception
+    bonReception,
+    facture
   }
 })
