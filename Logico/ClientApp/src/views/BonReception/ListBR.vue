@@ -64,8 +64,6 @@
         />
       </DxColumn>
 
-      <DxColumn data-field="montant" caption="Montant" />
-
       <DxColumn data-field="prevalidee" caption="Prévalidée" />
 
       <DxColumn data-field="validee" caption="Validée" />
@@ -214,6 +212,63 @@ export default {
         .catch((error) => {
           console.log(error);
           notify("Echec de suppression!", "error", 2000);
+        });
+    },
+      exportGrid() {
+      let br = this.getBonReceptions;
+      if (!br) {
+        notify("Aucun données a exporter", "error", 2000);
+        return;
+      }
+      const pdfDoc = new jsPDF();
+      exportDataGridToPdf({
+        jsPDFDocument: pdfDoc,
+        component: this.grid,
+        customizeCell: function (options) {
+          const { gridCell, pdfCell } = options;
+          if (gridCell.rowType === "data") {
+            pdfCell.styles = {};
+          }
+        },
+      })
+        .then(() => {
+          pdfDoc.setFontSize(12);
+          const pageCount = pdfDoc.internal.getNumberOfPages();
+          for (let i = 1; i <= pageCount; i++) {
+            pdfDoc.setPage(i);
+            const pageSize = pdfDoc.internal.pageSize;
+            const pageWidth = pageSize.width
+              ? pageSize.width
+              : pageSize.getWidth();
+            const pageHeight = pageSize.height
+              ? pageSize.height
+              : pageSize.getHeight();
+            const header = "Liste des Bon de réception";
+            const footer = `Page ${i} sur ${pageCount}`;
+
+            // Header
+            pdfDoc.setTextColor(20, 143, 119);
+            pdfDoc.setFontSize(18);
+            pdfDoc.text(
+              header,
+              pageWidth / 2 - pdfDoc.getTextWidth(header) / 2,
+              4,
+              { baseline: "top" }
+            );
+
+            // Footer
+            pdfDoc.setTextColor(0, 0, 0);
+            pdfDoc.setFontSize(12);
+            pdfDoc.text(
+              footer,
+              pageWidth / 2 - pdfDoc.getTextWidth(footer) / 2,
+              pageHeight - 7,
+              { baseline: "bottom" }
+            );
+          }
+        })
+        .then(() => {
+          pdfDoc.save("Liste_des_Bons_Réception.pdf");
         });
     },
   },
